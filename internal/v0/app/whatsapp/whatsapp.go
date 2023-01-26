@@ -73,9 +73,8 @@ func SendMessage(phone_send_to string, text string) (string, bool, error) {
 	log.Debug("phone_send_to: ", phone_send_to, " text: "+text)
 	//
 
-	//ctxMain := contextmain.GetContext()
 	ctxMain := context.Background()
-	ctx, cancel := context.WithTimeout(ctxMain, 600*time.Second)
+	ctx, cancel := context.WithTimeout(ctxMain, 120*time.Second)
 	defer cancel()
 
 	recipient, ok := ParseJID(phone_send_to)
