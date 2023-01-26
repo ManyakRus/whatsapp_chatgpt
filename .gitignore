@@ -1,0 +1,15 @@
+/.env
+/session.txt_удалить
+/settings.ini_удалить
+/session.txt
+/cover.out
+
+/internal/v0/app/.env
+/internal/v0/app/session.txt
+/pkg/v0/client_grpc/.env
+/whatsapp.db
+/whatsapp.db-journal
+
+.env
+/.idea/
+/bin/.env
