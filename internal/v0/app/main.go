@@ -7,6 +7,7 @@ import (
 	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/contextmain"
 	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/logger"
 	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/stopapp"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/whatsapp_connect"
 )
 
 // log - глобальный логгер
@@ -27,14 +28,7 @@ func StartApp() {
 
 	contextmain.GetContext()
 
-	whatsapp.FillSettings()
-
-	go func() {
-		err := whatsapp.CreateClient()
-		if err != nil {
-			log.Panicln("whatsapp.CreateClient() error: ", err)
-		}
-	}()
+	whatsapp_connect.Start(whatsapp.EventHandler)
 
 	stopapp.GetWaitGroup_Main().Wait()
 

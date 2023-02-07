@@ -35,13 +35,14 @@ github.com/tidwall/match
 # github.com/tidwall/pretty v1.2.0
 ## explicit; go 1.16
 github.com/tidwall/pretty
-# gitlab.aescorp.ru/dsp_dev/claim/nikitin/common v0.0.0-20230118143738-2489a6817232
+# gitlab.aescorp.ru/dsp_dev/claim/nikitin/common v0.0.0-20230207143647-fe8af27e13ee
 ## explicit; go 1.17
 gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/config
 gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/contextmain
 gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/logger
 gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/micro
 gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/stopapp
+gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/whatsapp_connect
 # go.mau.fi/libsignal v0.1.0
 ## explicit; go 1.18
 go.mau.fi/libsignal/cipher
@@ -70,7 +71,7 @@ go.mau.fi/libsignal/util/errorhelper
 go.mau.fi/libsignal/util/keyhelper
 go.mau.fi/libsignal/util/medium
 go.mau.fi/libsignal/util/optional
-# go.mau.fi/whatsmeow v0.0.0-20230125150755-2b8ce9cec3fc
+# go.mau.fi/whatsmeow v0.0.0-20230128195103-dcbc8dd31a22
 ## explicit; go 1.18
 go.mau.fi/whatsmeow
 go.mau.fi/whatsmeow/appstate

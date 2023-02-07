@@ -107,13 +107,14 @@ func WaitStop() {
 	GetWaitGroup_Main().Done()
 }
 
-//ожидает чтоб прям щас ничего не отправлялось
+// ожидает чтоб прям щас ничего не отправлялось
 func WaitTotalMessagesSendingNow(filename string) {
 	for f := 0; f < SecondsWaitTotalMessagesSendingNow; f++ {
-		if atomic.LoadInt32(&TotalMessagesSendingNow) == 0 {
+		TotalMessages := atomic.LoadInt32(&TotalMessagesSendingNow)
+		if TotalMessages == 0 {
 			break
 		}
-		log.Warn("TotalMessagesSendingNow =", TotalMessagesSendingNow, " !=0 sleep(1000), filename: ", filename)
+		log.Warn("TotalMessagesSendingNow =", TotalMessages, " !=0 sleep(1000), filename: ", filename)
 		micro.Sleep(1000)
 	}
 }
