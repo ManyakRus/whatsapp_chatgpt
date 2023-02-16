@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/ManyakRus/whatsapp_chatgpt/internal/v0/app/programdir"
 	"github.com/ManyakRus/whatsapp_chatgpt/internal/v0/app/whatsapp"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/chatgpt_connect"
 	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/config"
 	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/contextmain"
 	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/logger"
@@ -27,6 +28,8 @@ func StartApp() {
 	stopapp.StartWaitStop()
 
 	contextmain.GetContext()
+
+	chatgpt_connect.Start()
 
 	whatsapp_connect.Start(whatsapp.EventHandler)
 

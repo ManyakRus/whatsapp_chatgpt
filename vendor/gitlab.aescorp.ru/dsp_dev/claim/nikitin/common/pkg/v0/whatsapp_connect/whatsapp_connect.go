@@ -89,11 +89,10 @@ func FillMessageWhatsapp(mess *events.Message) MessageWhatsapp {
 // SendMessage - отправка сообщения в мессенджер Телеграм
 // возвращает:
 // id = id отправленного сообщения в WhatsApp
-// is_sent = отправлено ли сообщение
 // err = error
-func SendMessage(phone_send_to string, text string) (string, bool, error) {
+func SendMessage(phone_send_to string, text string) (string, error) {
 	var id string
-	var is_sent bool
+	//var is_sent bool
 
 	TimeLimit()
 	log.Debug("phone_send_to: ", phone_send_to, " text: "+text)
@@ -107,7 +106,7 @@ func SendMessage(phone_send_to string, text string) (string, bool, error) {
 	if !ok {
 		text1 := "ParseJID() invalid JID: " + phone_send_to
 		log.Error(text1)
-		return id, false, errors.New(text1)
+		return id, errors.New(text1)
 	}
 
 	MessageID := whatsmeow.GenerateMessageID()
@@ -118,12 +117,11 @@ func SendMessage(phone_send_to string, text string) (string, bool, error) {
 		text1 := "Message not sent, to: " + phone_send_to + " !"
 		log.Error(text1)
 		err = errors.New(text1)
-		return "", false, err
+		return "", err
 	}
 
 	id = string(MessageID)
-	is_sent = true
-	return id, is_sent, nil
+	return id, nil
 }
 
 // eventHandler - получение событий из сервера whatsapp
@@ -146,9 +144,9 @@ func eventHandler_test(evt interface{}) {
 func Connect(eventHandler func(evt interface{})) {
 	err := Connect_err(eventHandler)
 	if err != nil {
-		log.Panic("Connect_err() error: ", err)
+		log.Panic("WHATSAPP Connect_err() error: ", err)
 	} else {
-		log.Info("WHATSAPP conncted. PhoneFrom from: ", Settings.WHATSAPP_PHONE_FROM)
+		log.Info("WHATSAPP connected. PhoneFrom from: ", Settings.WHATSAPP_PHONE_FROM)
 	}
 }
 
