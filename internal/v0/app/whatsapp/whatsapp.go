@@ -37,6 +37,14 @@ func ReceiveMessage(mess whatsapp_connect.MessageWhatsapp) {
 		return
 	}
 
+	if mess.IsGroup == true {
+		return
+	}
+
+	if mess.MediaType != "" {
+		return
+	}
+
 	if mess.IsFromMe == true {
 		if strings.ToLower(mess.Text) == "on" {
 			constants.AutoAnswer_Enabled = true
@@ -61,8 +69,10 @@ func ReceiveMessage(mess whatsapp_connect.MessageWhatsapp) {
 
 		//потом убрать
 		if constants.AutoAnswer_Enabled == true {
-			OtvetGPT, err := chatgpt_connect.SendMessage(mess.Text)
+			TextRequest := mess.Text
+			OtvetGPT, err := chatgpt_connect.SendMessage(TextRequest)
 			if err != nil {
+				log.Error("chatgpt_connect.SendMessage() error: ", err)
 				return
 			}
 			if OtvetGPT == "" {

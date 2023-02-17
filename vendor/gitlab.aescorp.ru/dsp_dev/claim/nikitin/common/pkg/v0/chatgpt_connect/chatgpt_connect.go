@@ -1,7 +1,10 @@
 package chatgpt_connect
 
 import (
+	"context"
 	"errors"
+	"time"
+
 	//"github.com/jackc/pgconn"
 	"os"
 	"sync"
@@ -29,8 +32,10 @@ var Settings SettingsINI
 
 // SettingsINI - структура для хранения всех нужных переменных окружения
 type SettingsINI struct {
-	CHATGPT_API_KEY string
-	CHATGPT_NAME    string
+	CHATGPT_API_KEY    string
+	CHATGPT_NAME       string
+	CHATGPT_START_TEXT string
+	CHATGPT_END_TEXT   string
 }
 
 // Connect_err - подключается к базе данных
@@ -137,11 +142,19 @@ func FillSettings() {
 	Settings = SettingsINI{}
 	Settings.CHATGPT_API_KEY = os.Getenv("CHATGPT_API_KEY")
 	Settings.CHATGPT_NAME = os.Getenv("CHATGPT_NAME")
+	Settings.CHATGPT_START_TEXT = os.Getenv("CHATGPT_START_TEXT")
+	Settings.CHATGPT_END_TEXT = os.Getenv("CHATGPT_END_TEXT")
 	if Settings.CHATGPT_API_KEY == "" {
 		log.Panicln("Need fill CHATGPT_API_KEY ! in os .env ")
 	}
 	if Settings.CHATGPT_NAME == "" {
 		log.Warnln("Need fill CHATGPT_NAME ! in os .env ")
+	}
+	if Settings.CHATGPT_START_TEXT == "" {
+		//log.Warnln("Need fill CHATGPT_NAME ! in os .env ")
+	}
+	if Settings.CHATGPT_END_TEXT == "" {
+		//log.Warnln("Need fill CHATGPT_NAME ! in os .env ")
 	}
 
 	//
@@ -155,7 +168,17 @@ func SendMessage(Text string) (string, error) {
 		Connect()
 	}
 
-	ctx := contextmain.GetContext()
+	if Settings.CHATGPT_START_TEXT != "" {
+		Text = Settings.CHATGPT_START_TEXT + Text
+	}
+
+	if Settings.CHATGPT_END_TEXT != "" {
+		Text = Text + Settings.CHATGPT_END_TEXT
+	}
+
+	ctxMain := context.Background()
+	ctx, cancel := context.WithTimeout(ctxMain, 120*time.Second)
+	defer cancel()
 
 	req := gogpt.CompletionRequest{
 		Model:     gogpt.GPT3Ada, //надо gogpt.GPT3TextDavinci003
