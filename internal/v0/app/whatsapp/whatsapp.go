@@ -46,6 +46,7 @@ func ReceiveMessage(mess whatsapp_connect.MessageWhatsapp) {
 	}
 
 	if mess.IsFromMe == true {
+		//ON
 		if strings.ToLower(mess.Text) == "on" {
 			constants.AutoAnswer_Enabled = true
 			Text := "AutoAnswer_Enabled = true"
@@ -56,6 +57,8 @@ func ReceiveMessage(mess whatsapp_connect.MessageWhatsapp) {
 			}
 			return
 		}
+
+		//OFF
 		if strings.ToLower(mess.Text) == "off" {
 			constants.AutoAnswer_Enabled = false
 			Text := "AutoAnswer_Enabled = false"
@@ -66,29 +69,44 @@ func ReceiveMessage(mess whatsapp_connect.MessageWhatsapp) {
 			}
 			return
 		}
-
-		//потом убрать
-		if constants.AutoAnswer_Enabled == true {
-			TextRequest := mess.Text
-			OtvetGPT, err := chatgpt_connect.SendMessage(TextRequest)
-			if err != nil {
-				log.Error("chatgpt_connect.SendMessage() error: ", err)
-				return
-			}
-			if OtvetGPT == "" {
-				log.Debug("error: response text gpt=''")
-				return
-			}
-
-			TextMess := OtvetGPT
-			if chatgpt_connect.Settings.CHATGPT_NAME != "" {
-				TextMess = chatgpt_connect.Settings.CHATGPT_NAME + ":" + "\n" + OtvetGPT
-			}
-			_, err = whatsapp_connect.SendMessage(whatsapp_connect.Settings.WHATSAPP_PHONE_FROM, TextMess)
-			if err != nil {
-				log.Error("whatsapp_connect.SendMessage() error: ", err)
-			}
-
-		}
 	}
+
+	//Проверка включено
+	if constants.AutoAnswer_Enabled == false {
+		return
+	}
+
+	//Отправка в ChatGPT
+	TextRequest := mess.Text
+	OtvetGPT, err := chatgpt_connect.SendMessage(TextRequest, mess.NameFrom)
+	if err != nil {
+		log.Error("chatgpt_connect.SendMessage() error: ", err)
+		return
+	}
+	if OtvetGPT == "" {
+		log.Debug("error: response text gpt=''")
+		return
+	}
+
+	//Отправка в WhatsApp
+	Whatsapp_SendMessage_FromChatGPT(mess.PhoneFrom, OtvetGPT)
+
+	//}
+}
+
+func Whatsapp_SendMessage_FromChatGPT(PhoneFrom, TextMess string) {
+
+	if len(TextMess) > 0 && TextMess[0:1] == "\n" {
+		TextMess = TextMess[1:]
+	}
+
+	if chatgpt_connect.Settings.CHATGPT_NAME != "" {
+		TextMess = chatgpt_connect.Settings.CHATGPT_NAME + TextMess
+	}
+
+	_, err := whatsapp_connect.SendMessage(PhoneFrom, TextMess)
+	if err != nil {
+		log.Error("whatsapp_connect.SendMessage() error: ", err)
+	}
+
 }

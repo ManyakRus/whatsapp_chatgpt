@@ -31,7 +31,8 @@ func StartApp() {
 
 	chatgpt_connect.Start()
 
-	whatsapp_connect.Start(whatsapp.EventHandler)
+	whatsapp_connect.Connect(whatsapp.EventHandler)
+	//whatsapp_connect.Start(whatsapp.EventHandler)
 
 	stopapp.GetWaitGroup_Main().Wait()
 

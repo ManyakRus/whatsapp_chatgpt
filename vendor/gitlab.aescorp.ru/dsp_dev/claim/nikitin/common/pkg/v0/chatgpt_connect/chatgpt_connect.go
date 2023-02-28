@@ -160,7 +160,7 @@ func FillSettings() {
 	//
 }
 
-func SendMessage(Text string) (string, error) {
+func SendMessage(Text string, user string) (string, error) {
 	var Otvet = ""
 	var err error
 
@@ -177,13 +177,14 @@ func SendMessage(Text string) (string, error) {
 	}
 
 	ctxMain := context.Background()
-	ctx, cancel := context.WithTimeout(ctxMain, 120*time.Second)
+	ctx, cancel := context.WithTimeout(ctxMain, 600*time.Second)
 	defer cancel()
 
 	req := gogpt.CompletionRequest{
-		Model:     gogpt.GPT3Ada, //надо gogpt.GPT3TextDavinci003
-		MaxTokens: 5,
+		Model:     gogpt.GPT3TextDavinci003, //надо gogpt.GPT3TextDavinci003
+		MaxTokens: 2048,
 		Prompt:    Text,
+		User:      user,
 	}
 	resp, err := Conn.CreateCompletion(ctx, req)
 	if err != nil {
