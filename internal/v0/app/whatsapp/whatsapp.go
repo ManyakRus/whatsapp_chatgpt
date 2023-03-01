@@ -76,6 +76,12 @@ func ReceiveMessage(mess whatsapp_connect.MessageWhatsapp) {
 		return
 	}
 
+	//сообщение от автоответчика (старое)
+	len_name := len(chatgpt_connect.Settings.CHATGPT_NAME)
+	if chatgpt_connect.Settings.CHATGPT_NAME != "" && len(mess.Text) >= len_name && mess.Text[0:len_name] == chatgpt_connect.Settings.CHATGPT_NAME {
+		return
+	}
+
 	//Отправка в ChatGPT
 	TextRequest := mess.Text
 	OtvetGPT, err := chatgpt_connect.SendMessage(TextRequest, mess.NameFrom)
@@ -89,19 +95,21 @@ func ReceiveMessage(mess whatsapp_connect.MessageWhatsapp) {
 	}
 
 	//Отправка в WhatsApp
-	Whatsapp_SendMessage_FromChatGPT(mess.PhoneFrom, OtvetGPT)
+	SendMessage_WithChatGPTName(mess.PhoneFrom, OtvetGPT)
 
 	//}
 }
 
-func Whatsapp_SendMessage_FromChatGPT(PhoneFrom, TextMess string) {
+func SendMessage_WithChatGPTName(PhoneFrom, TextMess string) {
 
-	if len(TextMess) > 0 && TextMess[0:1] == "\n" {
-		TextMess = TextMess[1:]
-	}
+	//if len(TextMess) > 0 && TextMess[0:1] == "\n" {
+	//	TextMess = TextMess[1:]
+	//}
+
+	TextMess = strings.Trim(TextMess, "\n")
 
 	if chatgpt_connect.Settings.CHATGPT_NAME != "" {
-		TextMess = chatgpt_connect.Settings.CHATGPT_NAME + TextMess
+		TextMess = chatgpt_connect.Settings.CHATGPT_NAME + "\n" + TextMess
 	}
 
 	_, err := whatsapp_connect.SendMessage(PhoneFrom, TextMess)

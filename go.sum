@@ -24,8 +24,8 @@ github.com/sirupsen/logrus v1.8.1 h1:dJKuHgqk1NNQlqoA6BTlM1Wf9DOH3NBjQyu0h9+AZZE
 github.com/sirupsen/logrus v1.8.1/go.mod h1:yWOB1SBYBC5VeMP7gHvWumXLIWorT60ONWic61uBYv0=
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/stretchr/testify v1.8.1 h1:w7B6lhMri9wdJUVmEZPGGhZzrYTPvgJArz7wNPgYKsk=
-gitlab.aescorp.ru/dsp_dev/claim/nikitin/common v0.0.0-20230228143001-dafc31c17aba h1:ZlIakzJGqjG6Xs5qHvjk2B/yVm2/S5km2OQOcW1AKP4=
-gitlab.aescorp.ru/dsp_dev/claim/nikitin/common v0.0.0-20230228143001-dafc31c17aba/go.mod h1:T09Ve4ymFVXSuIu8y38uVv/G3nwQaPDk55igWvHEeKc=
+gitlab.aescorp.ru/dsp_dev/claim/nikitin/common v0.0.0-20230301150711-c7dda26ff5bb h1:RCAgAg704+E/BUKiuXqJFwhuGz6Mr6m5/a28JNn9Fys=
+gitlab.aescorp.ru/dsp_dev/claim/nikitin/common v0.0.0-20230301150711-c7dda26ff5bb/go.mod h1:T09Ve4ymFVXSuIu8y38uVv/G3nwQaPDk55igWvHEeKc=
 go.mau.fi/libsignal v0.1.0 h1:vAKI/nJ5tMhdzke4cTK1fb0idJzz1JuEIpmjprueC+c=
 go.mau.fi/libsignal v0.1.0/go.mod h1:R8ovrTezxtUNzCQE5PH30StOQWWeBskBsWE55vMfY9I=
 go.mau.fi/whatsmeow v0.0.0-20230128195103-dcbc8dd31a22 h1:za/zmM0hcfEKTRcLtr2zcUFE4VpUw8CndXNeV+v676c=

@@ -1,3 +1,3 @@
 package constants
 
-var AutoAnswer_Enabled = false
+var AutoAnswer_Enabled = true

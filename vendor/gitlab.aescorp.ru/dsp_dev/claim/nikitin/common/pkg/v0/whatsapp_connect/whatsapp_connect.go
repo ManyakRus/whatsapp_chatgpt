@@ -63,11 +63,13 @@ type SettingsINI struct {
 type MessageWhatsapp struct {
 	ID        string
 	PhoneFrom string
+	PhoneTo   string
 	IsFromMe  bool
 	MediaType string
 	NameFrom  string
-	IsGroup   bool
-	Text      string
+	//NameTo    string
+	IsGroup bool
+	Text    string
 }
 
 func FillMessageWhatsapp(mess *events.Message) MessageWhatsapp {
@@ -82,6 +84,8 @@ func FillMessageWhatsapp(mess *events.Message) MessageWhatsapp {
 	if mess.Message != nil && mess.Message.Conversation != nil {
 		Otvet.Text = *mess.Message.Conversation
 	}
+
+	Otvet.PhoneTo = mess.Info.Chat.User
 
 	return Otvet
 }
