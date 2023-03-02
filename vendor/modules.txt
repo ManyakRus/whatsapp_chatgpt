@@ -5,7 +5,7 @@ filippo.io/edwards25519/field
 # github.com/gorilla/websocket v1.5.0
 ## explicit; go 1.12
 github.com/gorilla/websocket
-# github.com/joho/godotenv v1.4.0
+# github.com/joho/godotenv v1.5.1
 ## explicit; go 1.12
 github.com/joho/godotenv
 # github.com/mattn/go-sqlite3 v1.14.16
@@ -14,21 +14,21 @@ github.com/mattn/go-sqlite3
 # github.com/mdp/qrterminal/v3 v3.0.0
 ## explicit
 github.com/mdp/qrterminal/v3
-# github.com/sashabaranov/go-gpt3 v1.0.0
+# github.com/sashabaranov/go-gpt3 v1.3.1
 ## explicit; go 1.17
 github.com/sashabaranov/go-gpt3
-# github.com/sirupsen/logrus v1.8.1
+# github.com/sirupsen/logrus v1.9.0
 ## explicit; go 1.13
 github.com/sirupsen/logrus
-# gitlab.aescorp.ru/dsp_dev/claim/nikitin/common v0.0.0-20230301150711-c7dda26ff5bb
-## explicit; go 1.17
-gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/chatgpt_connect
-gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/config
-gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/contextmain
-gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/logger
-gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/micro
-gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/stopapp
-gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/whatsapp_connect
+# gitlab.aescorp.ru/dsp_dev/claim/nikitin v0.0.0-20230302090137-b6c61fea4038
+## explicit; go 1.19
+gitlab.aescorp.ru/dsp_dev/claim/nikitin/chatgpt_connect
+gitlab.aescorp.ru/dsp_dev/claim/nikitin/config
+gitlab.aescorp.ru/dsp_dev/claim/nikitin/contextmain
+gitlab.aescorp.ru/dsp_dev/claim/nikitin/logger
+gitlab.aescorp.ru/dsp_dev/claim/nikitin/micro
+gitlab.aescorp.ru/dsp_dev/claim/nikitin/stopapp
+gitlab.aescorp.ru/dsp_dev/claim/nikitin/whatsapp_connect
 # go.mau.fi/libsignal v0.1.0
 ## explicit; go 1.18
 go.mau.fi/libsignal/cipher
@@ -57,8 +57,8 @@ go.mau.fi/libsignal/util/errorhelper
 go.mau.fi/libsignal/util/keyhelper
 go.mau.fi/libsignal/util/medium
 go.mau.fi/libsignal/util/optional
-# go.mau.fi/whatsmeow v0.0.0-20230128195103-dcbc8dd31a22
-## explicit; go 1.18
+# go.mau.fi/whatsmeow v0.0.0-20230226124255-e5c8f3c95d78
+## explicit; go 1.19
 go.mau.fi/whatsmeow
 go.mau.fi/whatsmeow/appstate
 go.mau.fi/whatsmeow/appstate/lthash
@@ -75,12 +75,12 @@ go.mau.fi/whatsmeow/util/gcmutil
 go.mau.fi/whatsmeow/util/hkdfutil
 go.mau.fi/whatsmeow/util/keys
 go.mau.fi/whatsmeow/util/log
-# golang.org/x/crypto v0.4.0
+# golang.org/x/crypto v0.6.0
 ## explicit; go 1.17
 golang.org/x/crypto/curve25519
 golang.org/x/crypto/curve25519/internal/field
 golang.org/x/crypto/hkdf
-# golang.org/x/sys v0.3.0
+# golang.org/x/sys v0.5.0
 ## explicit; go 1.17
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix

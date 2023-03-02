@@ -10,9 +10,9 @@ import (
 	"syscall"
 	//"github.com/sirupsen/logrus"
 
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/contextmain"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/logger"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/micro"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/contextmain"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/logger"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/micro"
 	//	"gitlab.aescorp.ru/dsp_dev/notifier/notifier_adp_eml/internal/v0/app/micro"
 	//"gitlab.aescorp.ru/dsp_dev/notifier/notifier_adp_eml/internal/v0/app/db"
 	//"gitlab.aescorp.ru/dsp_dev/notifier/notifier_adp_eml/internal/v0/app/grpcserver"

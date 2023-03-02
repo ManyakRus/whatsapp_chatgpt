@@ -3,12 +3,12 @@ package main
 import (
 	"github.com/ManyakRus/whatsapp_chatgpt/internal/v0/app/programdir"
 	"github.com/ManyakRus/whatsapp_chatgpt/internal/v0/app/whatsapp"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/chatgpt_connect"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/config"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/contextmain"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/logger"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/stopapp"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/whatsapp_connect"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/chatgpt_connect"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/config"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/contextmain"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/logger"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/stopapp"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/whatsapp_connect"
 )
 
 // log - глобальный логгер

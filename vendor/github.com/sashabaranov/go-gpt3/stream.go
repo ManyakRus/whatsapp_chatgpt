@@ -11,28 +11,48 @@ import (
 	"net/http"
 )
 
+var (
+	ErrTooManyEmptyStreamMessages = errors.New("stream has sent too many empty messages")
+)
+
 type CompletionStream struct {
+	emptyMessagesLimit uint
+	isFinished         bool
+
 	reader   *bufio.Reader
 	response *http.Response
 }
 
 func (stream *CompletionStream) Recv() (response CompletionResponse, err error) {
+	if stream.isFinished {
+		err = io.EOF
+		return
+	}
+
+	var emptyMessagesCount uint
+
 waitForData:
 	line, err := stream.reader.ReadBytes('\n')
 	if err != nil {
-		if errors.Is(err, io.EOF) {
-			return
-		}
+		return
 	}
 
 	var headerData = []byte("data: ")
 	line = bytes.TrimSpace(line)
 	if !bytes.HasPrefix(line, headerData) {
+		emptyMessagesCount++
+		if emptyMessagesCount > stream.emptyMessagesLimit {
+			err = ErrTooManyEmptyStreamMessages
+			return
+		}
+
 		goto waitForData
 	}
 
 	line = bytes.TrimPrefix(line, headerData)
 	if string(line) == "[DONE]" {
+		stream.isFinished = true
+		err = io.EOF
 		return
 	}
 
@@ -59,23 +79,24 @@ func (c *Client) CreateCompletionStream(
 	}
 
 	urlSuffix := "/completions"
-	req, err := http.NewRequest("POST", c.fullURL(urlSuffix), bytes.NewBuffer(reqBytes))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.fullURL(urlSuffix), bytes.NewBuffer(reqBytes))
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "text/event-stream")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.authToken))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.config.authToken))
 	if err != nil {
 		return
 	}
 
-	req = req.WithContext(ctx)
-	resp, err := c.HTTPClient.Do(req) //nolint:bodyclose // body is closed in stream.Close()
+	resp, err := c.config.HTTPClient.Do(req) //nolint:bodyclose // body is closed in stream.Close()
 	if err != nil {
 		return
 	}
 
 	stream = &CompletionStream{
+		emptyMessagesLimit: c.config.EmptyMessagesLimit,
+
 		reader:   bufio.NewReader(resp.Body),
 		response: resp,
 	}

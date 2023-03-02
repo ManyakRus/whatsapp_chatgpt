@@ -206,8 +206,7 @@ func ProgramDir_Common() string {
 
 		if dir[len(dir)-5:] == "micro" {
 			dir = FindDirUp(dir)
-			dir = FindDirUp(dir)
-			dir = FindDirUp(dir)
+			//dir = FindDirUp(dir)
 			//dir = FindDirUp(dir)
 		}
 	}

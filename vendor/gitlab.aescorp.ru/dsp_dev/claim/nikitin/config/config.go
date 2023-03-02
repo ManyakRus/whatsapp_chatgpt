@@ -10,7 +10,7 @@ import (
 
 	//log "github.com/sirupsen/logrus"
 
-	logger "gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/logger"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/logger"
 	//"gitlab.aescorp.ru/dsp_dev/notifier/notifier_adp_eml/internal/v0/app/types"
 	//"gitlab.aescorp.ru/dsp_dev/notifier/notifier_adp_eml/internal/v0/app/micro"
 )

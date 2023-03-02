@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"strings"
 
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/micro"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/micro"
 )
 
 // CurrentFilename - возвращает полное имя текущего исполняемого файла

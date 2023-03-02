@@ -23,10 +23,10 @@ import (
 	"go.mau.fi/whatsmeow/types"
 	waLog "go.mau.fi/whatsmeow/util/log"
 
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/contextmain"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/logger"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/micro"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/stopapp"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/contextmain"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/logger"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/micro"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/stopapp"
 )
 
 // clientWhatsApp - клиент соединения мессенджера Whatsapp

@@ -3,9 +3,9 @@ package main
 import (
 	"testing"
 
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/contextmain"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/micro"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/stopapp"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/contextmain"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/micro"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/stopapp"
 )
 
 func TestStartApp(t *testing.T) {

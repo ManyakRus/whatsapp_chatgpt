@@ -12,7 +12,7 @@ import (
 	//"github.com/google/logger"
 	"github.com/sirupsen/logrus"
 
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/micro"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/micro"
 )
 
 // log - глобальный логгер приложения

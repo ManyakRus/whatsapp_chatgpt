@@ -3,9 +3,9 @@ package whatsapp
 import (
 	"fmt"
 	"github.com/ManyakRus/whatsapp_chatgpt/internal/v0/app/constants"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/chatgpt_connect"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/logger"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/whatsapp_connect"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/chatgpt_connect"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/logger"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/whatsapp_connect"
 	"go.mau.fi/whatsmeow/types/events"
 	"strings"
 )

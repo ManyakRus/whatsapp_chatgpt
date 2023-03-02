@@ -10,9 +10,9 @@ import (
 	"sync"
 	//"time"
 
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/contextmain"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/logger"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/pkg/v0/stopapp"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/contextmain"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/logger"
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/stopapp"
 
 	gogpt "github.com/sashabaranov/go-gpt3"
 )
