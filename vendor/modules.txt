@@ -20,7 +20,7 @@ github.com/sashabaranov/go-gpt3
 # github.com/sirupsen/logrus v1.9.0
 ## explicit; go 1.13
 github.com/sirupsen/logrus
-# gitlab.aescorp.ru/dsp_dev/claim/nikitin v0.0.0-20230302090137-b6c61fea4038
+# gitlab.aescorp.ru/dsp_dev/claim/nikitin v0.0.0-20230302132946-a8d44585bd27
 ## explicit; go 1.19
 gitlab.aescorp.ru/dsp_dev/claim/nikitin/chatgpt_connect
 gitlab.aescorp.ru/dsp_dev/claim/nikitin/config

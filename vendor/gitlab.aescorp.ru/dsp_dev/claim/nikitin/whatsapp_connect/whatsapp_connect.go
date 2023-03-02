@@ -68,8 +68,9 @@ type MessageWhatsapp struct {
 	MediaType string
 	NameFrom  string
 	//NameTo    string
-	IsGroup bool
-	Text    string
+	IsGroup  bool
+	Text     string
+	TimeSent time.Time
 }
 
 func FillMessageWhatsapp(mess *events.Message) MessageWhatsapp {
@@ -83,9 +84,12 @@ func FillMessageWhatsapp(mess *events.Message) MessageWhatsapp {
 	Otvet.IsGroup = mess.Info.IsGroup
 	if mess.Message != nil && mess.Message.Conversation != nil {
 		Otvet.Text = *mess.Message.Conversation
+	} else if mess.Message != nil && mess.Message.ExtendedTextMessage != nil {
+		Otvet.Text = *mess.Message.ExtendedTextMessage.Text
 	}
 
 	Otvet.PhoneTo = mess.Info.Chat.User
+	Otvet.TimeSent = mess.Info.Timestamp
 
 	return Otvet
 }

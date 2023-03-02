@@ -43,9 +43,9 @@ func Connect() {
 
 	err := Connect_err()
 	if err != nil {
-		log.Panicln("CHATGPT Connect_err() api_key: ", Settings.CHATGPT_API_KEY, " Error: ", err)
+		log.Panicln("ChatGPT Connect_err() api_key: ", Settings.CHATGPT_API_KEY, " Error: ", err)
 	} else {
-		log.Info("CHATGPT connected. api_key: ", Settings.CHATGPT_API_KEY)
+		log.Info("ChatGPT connected. api_key: ", Settings.CHATGPT_API_KEY)
 	}
 
 }
@@ -84,9 +84,9 @@ func CloseConnection() error {
 
 	err := CloseConnection_err()
 	if err != nil {
-		log.Error("Postgres sqlx CloseConnection() error: ", err)
+		log.Error("ChatGPT CloseConnection() error: ", err)
 	} else {
-		log.Debug("Postgres sqlx connection closed")
+		log.Debug("ChatGPT connection closed")
 	}
 
 	return err
@@ -118,7 +118,7 @@ func WaitStop() {
 	}
 
 	//
-	stopapp.WaitTotalMessagesSendingNow("CHATGPT")
+	stopapp.WaitTotalMessagesSendingNow("ChatGPT")
 
 	//
 	err := CloseConnection()

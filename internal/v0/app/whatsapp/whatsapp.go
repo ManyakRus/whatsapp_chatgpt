@@ -8,6 +8,7 @@ import (
 	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/whatsapp_connect"
 	"go.mau.fi/whatsmeow/types/events"
 	"strings"
+	"time"
 )
 
 // log - глобальный логгер приложения
@@ -34,6 +35,10 @@ func ReceiveMessage(mess whatsapp_connect.MessageWhatsapp) {
 	var err error
 
 	if mess.Text == "" {
+		return
+	}
+
+	if len(mess.Text) <= 2 {
 		return
 	}
 
@@ -77,8 +82,19 @@ func ReceiveMessage(mess whatsapp_connect.MessageWhatsapp) {
 	}
 
 	//сообщение от автоответчика (старое)
-	len_name := len(chatgpt_connect.Settings.CHATGPT_NAME)
-	if chatgpt_connect.Settings.CHATGPT_NAME != "" && len(mess.Text) >= len_name && mess.Text[0:len_name] == chatgpt_connect.Settings.CHATGPT_NAME {
+	name := chatgpt_connect.Settings.CHATGPT_NAME + "\n"
+	len_name := len(name)
+	if chatgpt_connect.Settings.CHATGPT_NAME != "" && len(mess.Text) >= len_name && mess.Text[0:len_name] == name {
+		return
+	}
+
+	// сообщение не мне
+	if mess.PhoneTo != whatsapp_connect.Settings.WHATSAPP_PHONE_FROM {
+		return
+	}
+
+	// прошёл 1 час // потом вернуть
+	if time.Now().Sub(mess.TimeSent) > time.Minute*60 {
 		return
 	}
 

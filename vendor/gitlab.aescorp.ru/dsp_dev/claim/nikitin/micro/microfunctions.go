@@ -204,7 +204,11 @@ func ProgramDir_Common() string {
 		filename = CurrentFilename()
 		dir = filepath.Dir(filename)
 
-		if dir[len(dir)-5:] == "micro" {
+		substr := SeparatorFile() + "vendor" + SeparatorFile()
+		pos_vendor := strings.Index(strings.ToLower(dir), substr)
+		if pos_vendor >= 0 {
+			dir = dir[0:pos_vendor]
+		} else if dir[len(dir)-5:] == "micro" {
 			dir = FindDirUp(dir)
 			//dir = FindDirUp(dir)
 			//dir = FindDirUp(dir)
