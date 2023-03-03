@@ -54,7 +54,7 @@ func ReceiveMessage(mess whatsapp_connect.MessageWhatsapp) {
 		//ON
 		if strings.ToLower(mess.Text) == "on" {
 			constants.AutoAnswer_Enabled = true
-			Text := "AutoAnswer_Enabled = true"
+			Text := constants.TextEnabled
 			log.Info(Text)
 			_, err = whatsapp_connect.SendMessage(whatsapp_connect.Settings.WHATSAPP_PHONE_FROM, Text)
 			if err != nil {
@@ -66,7 +66,7 @@ func ReceiveMessage(mess whatsapp_connect.MessageWhatsapp) {
 		//OFF
 		if strings.ToLower(mess.Text) == "off" {
 			constants.AutoAnswer_Enabled = false
-			Text := "AutoAnswer_Enabled = false"
+			Text := constants.TextDisabled
 			log.Info(Text)
 			_, err = whatsapp_connect.SendMessage(whatsapp_connect.Settings.WHATSAPP_PHONE_FROM, Text)
 			if err != nil {
@@ -78,6 +78,11 @@ func ReceiveMessage(mess whatsapp_connect.MessageWhatsapp) {
 
 	//Проверка включено
 	if constants.AutoAnswer_Enabled == false {
+		return
+	}
+
+	//игнорируем своё сообщение
+	if (mess.Text == constants.TextEnabled) || (mess.Text == constants.TextDisabled) {
 		return
 	}
 
