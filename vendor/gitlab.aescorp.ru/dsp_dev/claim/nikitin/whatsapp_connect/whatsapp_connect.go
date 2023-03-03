@@ -61,15 +61,15 @@ type SettingsINI struct {
 
 // MessageWhatsapp - сообщение из WhatsApp сокращённо
 type MessageWhatsapp struct {
-	ID        string
+	Text      string
+	NameFrom  string
 	PhoneFrom string
 	PhoneTo   string
 	IsFromMe  bool
 	MediaType string
-	NameFrom  string
 	//NameTo    string
 	IsGroup  bool
-	Text     string
+	ID       string
 	TimeSent time.Time
 }
 
@@ -83,8 +83,10 @@ func FillMessageWhatsapp(mess *events.Message) MessageWhatsapp {
 	Otvet.NameFrom = mess.Info.PushName
 	Otvet.IsGroup = mess.Info.IsGroup
 	if mess.Message != nil && mess.Message.Conversation != nil {
+		//простое сообщение
 		Otvet.Text = *mess.Message.Conversation
 	} else if mess.Message != nil && mess.Message.ExtendedTextMessage != nil {
+		//сообщение ответ
 		Otvet.Text = *mess.Message.ExtendedTextMessage.Text
 	}
 
@@ -308,4 +310,20 @@ func Start(eventHandler func(evt interface{})) {
 	stopapp.GetWaitGroup_Main().Add(1)
 	go WaitStop()
 
+}
+
+func (m MessageWhatsapp) String() string {
+	Otvet := ""
+
+	Otvet = Otvet + fmt.Sprint("Text: ", m.Text, "\n")
+	Otvet = Otvet + fmt.Sprint("NameFrom: ", m.NameFrom, "\n")
+	Otvet = Otvet + fmt.Sprint("PhoneFrom: ", m.PhoneFrom, "\n")
+	Otvet = Otvet + fmt.Sprint("PhoneTo: ", m.PhoneTo, "\n")
+	Otvet = Otvet + fmt.Sprint("IsFromMe: ", m.IsFromMe, "\n")
+	Otvet = Otvet + fmt.Sprint("MediaType: ", m.MediaType, "\n")
+	Otvet = Otvet + fmt.Sprint("IsGroup: ", m.IsGroup, "\n")
+	Otvet = Otvet + fmt.Sprint("ID: ", m.ID, "\n")
+	Otvet = Otvet + fmt.Sprint("TimeSent: ", m.TimeSent, "\n")
+
+	return Otvet
 }
