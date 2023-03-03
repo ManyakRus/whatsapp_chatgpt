@@ -26,8 +26,8 @@ github.com/sirupsen/logrus v1.9.0/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVs
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.8.1 h1:w7B6lhMri9wdJUVmEZPGGhZzrYTPvgJArz7wNPgYKsk=
-gitlab.aescorp.ru/dsp_dev/claim/nikitin v0.0.0-20230303083140-f44863e5b1c2 h1:HnxzK6AKri/0GC3rzj3Clv0CageB9SaAV/vmdhgGI1g=
-gitlab.aescorp.ru/dsp_dev/claim/nikitin v0.0.0-20230303083140-f44863e5b1c2/go.mod h1:8fbhTQkcxzhezYCIUUdIJZQIrhO2BWF315qbRBY3fQs=
+gitlab.aescorp.ru/dsp_dev/claim/nikitin v0.0.0-20230303090223-191d14406359 h1:Z5kxb969e6sVe0FfpbaK+R1fVKS6hquiQLqYSg2ZBnk=
+gitlab.aescorp.ru/dsp_dev/claim/nikitin v0.0.0-20230303090223-191d14406359/go.mod h1:8fbhTQkcxzhezYCIUUdIJZQIrhO2BWF315qbRBY3fQs=
 go.mau.fi/libsignal v0.1.0 h1:vAKI/nJ5tMhdzke4cTK1fb0idJzz1JuEIpmjprueC+c=
 go.mau.fi/libsignal v0.1.0/go.mod h1:R8ovrTezxtUNzCQE5PH30StOQWWeBskBsWE55vMfY9I=
 go.mau.fi/whatsmeow v0.0.0-20230226124255-e5c8f3c95d78 h1:HXq3VXJhSL/S6kZkrCYMUhCELinVrfpPhDFpklZvHnA=

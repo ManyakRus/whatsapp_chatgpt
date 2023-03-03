@@ -93,10 +93,10 @@ func ReceiveMessage(mess whatsapp_connect.MessageWhatsapp) {
 		return
 	}
 
-	//// сообщение не мне
-	//if mess.PhoneTo != whatsapp_connect.Settings.WHATSAPP_PHONE_FROM {
-	//	return
-	//}
+	// сообщение не мне
+	if mess.PhoneChat != mess.PhoneFrom {
+		return
+	}
 
 	// прошёл 1 час // потом вернуть
 	if time.Now().Sub(mess.TimeSent) > time.Minute*60 {
