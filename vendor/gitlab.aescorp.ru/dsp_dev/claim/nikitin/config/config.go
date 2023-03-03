@@ -3,6 +3,7 @@
 package config
 
 import (
+	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/micro"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -19,15 +20,15 @@ import (
 var log = logger.GetLog()
 
 // LoadEnv - загружает переменные окружения в структуру из файла или из переменных окружения
-func LoadEnv(dir string) {
+func LoadEnv() {
 
-	//dir := micro.ProgramDir()
+	dir := micro.ProgramDir()
 	filename := dir + ".env"
-	LoadEnv1(filename)
+	LoadEnv_from_file(filename)
 }
 
-// LoadEnv1 загружает переменные окружения в структуру из файла или из переменных окружения
-func LoadEnv1(filename string) {
+// LoadEnv_from_file загружает переменные окружения в структуру из файла или из переменных окружения
+func LoadEnv_from_file(filename string) {
 
 	err := godotenv.Load(filename)
 	if err != nil {

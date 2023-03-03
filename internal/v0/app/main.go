@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/ManyakRus/whatsapp_chatgpt/internal/v0/app/programdir"
 	"github.com/ManyakRus/whatsapp_chatgpt/internal/v0/app/whatsapp"
 	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/chatgpt_connect"
 	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/config"
@@ -21,8 +20,8 @@ func main() {
 
 // StartApp - выполнение всех операций для старта приложения
 func StartApp() {
-	ProgramDir := programdir.ProgramDir()
-	config.LoadEnv(ProgramDir)
+	//ProgramDir := programdir.ProgramDir()
+	config.LoadEnv()
 	contextmain.GetContext()
 
 	stopapp.StartWaitStop()

@@ -156,7 +156,7 @@ func Connect(eventHandler func(evt interface{})) {
 	if err != nil {
 		log.Panic("WHATSAPP Connect_err() error: ", err)
 	} else {
-		log.Info("WHATSAPP connected. PhoneFrom from: ", Settings.WHATSAPP_PHONE_FROM)
+		log.Info("WHATSAPP connected. Phone from: ", Settings.WHATSAPP_PHONE_FROM)
 	}
 }
 

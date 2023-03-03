@@ -225,6 +225,12 @@ func ProgramDir_Common() string {
 	return dir
 }
 
+// ProgramDir - возвращает главный каталог программы, в конце "/"
+func ProgramDir() string {
+	Otvet := ProgramDir_Common()
+	return Otvet
+}
+
 // FileNameWithoutExtension - возвращает имя файла без расширения
 func FileNameWithoutExtension(fileName string) string {
 	return strings.TrimSuffix(fileName, filepath.Ext(fileName))
