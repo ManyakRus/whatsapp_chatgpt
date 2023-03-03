@@ -23,7 +23,7 @@ func EventHandler(evt interface{}) {
 		mess := evt.(*events.Message)
 		messW := whatsapp_connect.FillMessageWhatsapp(mess)
 		//fmt.Println("Received a message from: ", messW.NameFrom, " phone: ", messW.PhoneFrom, "text: ", messW.Text)
-		log.Debug("new message:\n", messW.String())
+		log.Debug("new message:\n", messW.String(), "\n")
 		ReceiveMessage(messW)
 		//fmt.Println("Received a message: ", mess.Message, " from: ", v.Message.GetContactMessage(), "text: ", v.Info.MediaType)
 	default:
