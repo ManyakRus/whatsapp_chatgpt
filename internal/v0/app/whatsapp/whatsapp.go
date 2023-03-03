@@ -1,7 +1,6 @@
 package whatsapp
 
 import (
-	"fmt"
 	"github.com/ManyakRus/whatsapp_chatgpt/internal/v0/app/constants"
 	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/chatgpt_connect"
 	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/logger"
@@ -23,8 +22,9 @@ func EventHandler(evt interface{}) {
 	case *events.Message:
 		mess := evt.(*events.Message)
 		messW := whatsapp_connect.FillMessageWhatsapp(mess)
+		//fmt.Println("Received a message from: ", messW.NameFrom, " phone: ", messW.PhoneFrom, "text: ", messW.Text)
+		log.Debugf("new message: %#v", messW)
 		ReceiveMessage(messW)
-		fmt.Println("Received a message from: ", messW.NameFrom, " phone: ", messW.PhoneFrom, "text: ", messW.Text)
 		//fmt.Println("Received a message: ", mess.Message, " from: ", v.Message.GetContactMessage(), "text: ", v.Info.MediaType)
 	default:
 		//fmt.Printf("Received: %#v \n", v)
@@ -38,9 +38,9 @@ func ReceiveMessage(mess whatsapp_connect.MessageWhatsapp) {
 		return
 	}
 
-	if len(mess.Text) <= 2 {
-		return
-	}
+	//if len(mess.Text) <= 2 {
+	//	return
+	//}
 
 	if mess.IsGroup == true {
 		return
@@ -88,10 +88,10 @@ func ReceiveMessage(mess whatsapp_connect.MessageWhatsapp) {
 		return
 	}
 
-	// сообщение не мне
-	if mess.PhoneTo != whatsapp_connect.Settings.WHATSAPP_PHONE_FROM {
-		return
-	}
+	//// сообщение не мне
+	//if mess.PhoneTo != whatsapp_connect.Settings.WHATSAPP_PHONE_FROM {
+	//	return
+	//}
 
 	// прошёл 1 час // потом вернуть
 	if time.Now().Sub(mess.TimeSent) > time.Minute*60 {
