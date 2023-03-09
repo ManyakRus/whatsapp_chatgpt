@@ -1,5 +1,5 @@
 FILEMAIN=./internal/v0/app/main.go
-FILEAPP=./bin/app_race
+FILEAPP=./bin/whatsapp_chatgpt
 
 run:
 	clear
