@@ -30,4 +30,7 @@ On = turn on auto answer
 Off = disable auto answer
 
 Tested on Linux Ubuntu 20.04.5
-Readmi version from: 03/06/2022
+Readme version from: 03/06/2022
+
+Source code open:
+https://github.com/ManyakRus/whatsapp_chatgpt

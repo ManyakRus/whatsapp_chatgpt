@@ -1,5 +1,7 @@
 FILEMAIN=./internal/v0/app/main.go
 FILEAPP=./bin/whatsapp_chatgpt
+SERVICEURL=github.com/ManyakRus/whatsapp_chatgpt/
+SERVICEURL2=gitlab.aescorp.ru/dsp_dev/claim/nikitin/
 
 run:
 	clear
@@ -32,3 +34,7 @@ run.test:
 	go fmt ./...
 	go test -coverprofile cover.out ./internal/v0/app/... ./cmd/...
 	go tool cover -func=cover.out
+graph:
+	goda graph -f "{{.Package.Name}}" "shared($(SERVICEURL)... $(SERVICEURL2)...)" | dot -Tsvg -o graph.svg
+dot:
+	goda graph -f "{{.Package.Name}}" "shared($(SERVICEURL)... $(SERVICEURL2)...)" >graph.dot
