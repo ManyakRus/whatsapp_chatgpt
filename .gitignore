@@ -12,3 +12,4 @@
 /bin/.env
 /vendor/gitlab.aescorp.ru/dsp_dev/claim/nikitin/common/whatsapp.db
 /bin/whatsapp.db
+/bin/whatsapp_chatgpt.exe
