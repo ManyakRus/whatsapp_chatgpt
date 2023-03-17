@@ -3,7 +3,7 @@ module github.com/ManyakRus/whatsapp_chatgpt
 go 1.17
 
 require (
-	gitlab.aescorp.ru/dsp_dev/claim/nikitin v0.0.0-20230303123114-d18688082098
+	github.com/ManyakRus/starter v0.0.0-20230317082009-e41e809e0de6
 	go.mau.fi/whatsmeow v0.0.0-20230226124255-e5c8f3c95d78
 )
 

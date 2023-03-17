@@ -1,10 +1,10 @@
 package whatsapp
 
 import (
+	"github.com/ManyakRus/starter/chatgpt_connect"
+	"github.com/ManyakRus/starter/logger"
+	"github.com/ManyakRus/starter/whatsapp_connect"
 	"github.com/ManyakRus/whatsapp_chatgpt/internal/v0/app/constants"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/chatgpt_connect"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/logger"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/whatsapp_connect"
 	"go.mau.fi/whatsmeow/types/events"
 	"strings"
 	"time"

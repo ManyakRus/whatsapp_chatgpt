@@ -1,13 +1,13 @@
 package main
 
 import (
+	"github.com/ManyakRus/starter/chatgpt_connect"
+	"github.com/ManyakRus/starter/config"
+	"github.com/ManyakRus/starter/contextmain"
+	"github.com/ManyakRus/starter/logger"
+	"github.com/ManyakRus/starter/stopapp"
+	"github.com/ManyakRus/starter/whatsapp_connect"
 	"github.com/ManyakRus/whatsapp_chatgpt/internal/v0/app/whatsapp"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/chatgpt_connect"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/config"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/contextmain"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/logger"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/stopapp"
-	"gitlab.aescorp.ru/dsp_dev/claim/nikitin/whatsapp_connect"
 )
 
 // log - глобальный логгер
