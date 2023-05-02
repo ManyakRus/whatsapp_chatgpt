@@ -9,6 +9,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/ManyakRus/starter/logger"
 	"go.mau.fi/whatsmeow/types/events"
 	"os"
 	"strings"
@@ -24,7 +25,6 @@ import (
 	waLog "go.mau.fi/whatsmeow/util/log"
 
 	"github.com/ManyakRus/starter/contextmain"
-	"github.com/ManyakRus/starter/logger"
 	"github.com/ManyakRus/starter/micro"
 	"github.com/ManyakRus/starter/stopapp"
 )

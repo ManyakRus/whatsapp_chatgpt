@@ -10,7 +10,8 @@ import (
 	"sync"
 
 	//"github.com/google/logger"
-	"github.com/sirupsen/logrus"
+	//"github.com/sirupsen/logrus"
+	logrus "github.com/ManyakRus/logrus"
 
 	"github.com/ManyakRus/starter/micro"
 )
