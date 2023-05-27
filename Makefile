@@ -25,8 +25,8 @@ build:
 buildwin:
 	cls
 	go build -race -o bin\whatsapp_chatgpt.exe internal\v0\app\main.go
-	cd ./cmd && \
-	./VersionToFile.py
+	cd cmd && \
+	VersionToFile.py
 lint:
 	clear
 	go fmt ./...
