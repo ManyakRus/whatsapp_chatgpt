@@ -50,3 +50,6 @@ dot:
 newrepo:
 	sed -i 's+$(SERVICEURL)+$(NEW_REPO)+g' go.mod
 	find -name *.go -not -path "*/vendor/*"|xargs sed -i 's+$(SERVICEURL)+$(NEW_REPO)+g'
+xgml:
+	clear
+	image_packages ./ docs/packages.xgml
