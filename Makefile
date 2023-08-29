@@ -1,5 +1,5 @@
-SERVICEURL=github.com/ManyakRus/whatsapp_chatgpt
-SERVICEURL2=gitlab.aescorp.ru/dsp_dev/claim/nikitin
+SERVICENAME=whatsapp_chatgpt
+SERVICEURL=github.com/ManyakRus/$(SERVICENAME)
 
 FILEMAIN=./internal/v0/app/main.go
 FILEAPP=./bin/whatsapp_chatgpt
@@ -43,13 +43,12 @@ run.test:
 	go fmt ./...
 	go test -coverprofile cover.out ./internal/v0/app/... ./cmd/...
 	go tool cover -func=cover.out
-graph:
-	goda graph -f "{{.Package.Name}}" "shared($(SERVICEURL)/... $(SERVICEURL2)/...)" | dot -Tsvg -o graph.svg
-dot:
-	goda graph -f "{{.Package.Name}}" "shared($(SERVICEURL)/... $(SERVICEURL2)/...)" >graph.dot
 newrepo:
 	sed -i 's+$(SERVICEURL)+$(NEW_REPO)+g' go.mod
 	find -name *.go -not -path "*/vendor/*"|xargs sed -i 's+$(SERVICEURL)+$(NEW_REPO)+g'
-xgml:
+graph:
 	clear
-	image_packages ./ docs/packages.xgml
+	image_packages ./ docs/packages.graphml
+conn:
+	clear
+	image_connections ./internal/v0/app docs/connections.graphml $(SERVICENAME)
