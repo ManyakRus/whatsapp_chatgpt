@@ -13,6 +13,9 @@ const (
 	CreateImageSize256x256   = "256x256"
 	CreateImageSize512x512   = "512x512"
 	CreateImageSize1024x1024 = "1024x1024"
+	// dall-e-3 supported only.
+	CreateImageSize1792x1024 = "1792x1024"
+	CreateImageSize1024x1792 = "1024x1792"
 )
 
 const (
@@ -20,11 +23,29 @@ const (
 	CreateImageResponseFormatB64JSON = "b64_json"
 )
 
+const (
+	CreateImageModelDallE2 = "dall-e-2"
+	CreateImageModelDallE3 = "dall-e-3"
+)
+
+const (
+	CreateImageQualityHD       = "hd"
+	CreateImageQualityStandard = "standard"
+)
+
+const (
+	CreateImageStyleVivid   = "vivid"
+	CreateImageStyleNatural = "natural"
+)
+
 // ImageRequest represents the request structure for the image API.
 type ImageRequest struct {
 	Prompt         string `json:"prompt,omitempty"`
+	Model          string `json:"model,omitempty"`
 	N              int    `json:"n,omitempty"`
+	Quality        string `json:"quality,omitempty"`
 	Size           string `json:"size,omitempty"`
+	Style          string `json:"style,omitempty"`
 	ResponseFormat string `json:"response_format,omitempty"`
 	User           string `json:"user,omitempty"`
 }
@@ -33,18 +54,21 @@ type ImageRequest struct {
 type ImageResponse struct {
 	Created int64                    `json:"created,omitempty"`
 	Data    []ImageResponseDataInner `json:"data,omitempty"`
+
+	httpHeader
 }
 
 // ImageResponseDataInner represents a response data structure for image API.
 type ImageResponseDataInner struct {
-	URL     string `json:"url,omitempty"`
-	B64JSON string `json:"b64_json,omitempty"`
+	URL           string `json:"url,omitempty"`
+	B64JSON       string `json:"b64_json,omitempty"`
+	RevisedPrompt string `json:"revised_prompt,omitempty"`
 }
 
 // CreateImage - API call to create an image. This is the main endpoint of the DALL-E API.
 func (c *Client) CreateImage(ctx context.Context, request ImageRequest) (response ImageResponse, err error) {
 	urlSuffix := "/images/generations"
-	req, err := c.requestBuilder.build(ctx, http.MethodPost, c.fullURL(urlSuffix), request)
+	req, err := c.newRequest(ctx, http.MethodPost, c.fullURL(urlSuffix), withBody(request))
 	if err != nil {
 		return
 	}
@@ -69,51 +93,50 @@ func (c *Client) CreateEditImage(ctx context.Context, request ImageEditRequest) 
 	builder := c.createFormBuilder(body)
 
 	// image
-	err = builder.createFormFile("image", request.Image)
+	err = builder.CreateFormFile("image", request.Image)
 	if err != nil {
 		return
 	}
 
 	// mask, it is optional
 	if request.Mask != nil {
-		err = builder.createFormFile("mask", request.Mask)
+		err = builder.CreateFormFile("mask", request.Mask)
 		if err != nil {
 			return
 		}
 	}
 
-	err = builder.writeField("prompt", request.Prompt)
+	err = builder.WriteField("prompt", request.Prompt)
 	if err != nil {
 		return
 	}
 
-	err = builder.writeField("n", strconv.Itoa(request.N))
+	err = builder.WriteField("n", strconv.Itoa(request.N))
 	if err != nil {
 		return
 	}
 
-	err = builder.writeField("size", request.Size)
+	err = builder.WriteField("size", request.Size)
 	if err != nil {
 		return
 	}
 
-	err = builder.writeField("response_format", request.ResponseFormat)
+	err = builder.WriteField("response_format", request.ResponseFormat)
 	if err != nil {
 		return
 	}
 
-	err = builder.close()
+	err = builder.Close()
 	if err != nil {
 		return
 	}
 
-	urlSuffix := "/images/edits"
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.fullURL(urlSuffix), body)
+	req, err := c.newRequest(ctx, http.MethodPost, c.fullURL("/images/edits"),
+		withBody(body), withContentType(builder.FormDataContentType()))
 	if err != nil {
 		return
 	}
 
-	req.Header.Set("Content-Type", builder.formDataContentType())
 	err = c.sendRequest(req, &response)
 	return
 }
@@ -133,39 +156,37 @@ func (c *Client) CreateVariImage(ctx context.Context, request ImageVariRequest) 
 	builder := c.createFormBuilder(body)
 
 	// image
-	err = builder.createFormFile("image", request.Image)
+	err = builder.CreateFormFile("image", request.Image)
 	if err != nil {
 		return
 	}
 
-	err = builder.writeField("n", strconv.Itoa(request.N))
+	err = builder.WriteField("n", strconv.Itoa(request.N))
 	if err != nil {
 		return
 	}
 
-	err = builder.writeField("size", request.Size)
+	err = builder.WriteField("size", request.Size)
 	if err != nil {
 		return
 	}
 
-	err = builder.writeField("response_format", request.ResponseFormat)
+	err = builder.WriteField("response_format", request.ResponseFormat)
 	if err != nil {
 		return
 	}
 
-	err = builder.close()
+	err = builder.Close()
 	if err != nil {
 		return
 	}
 
-	//https://platform.openai.com/docs/api-reference/images/create-variation
-	urlSuffix := "/images/variations"
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.fullURL(urlSuffix), body)
+	req, err := c.newRequest(ctx, http.MethodPost, c.fullURL("/images/variations"),
+		withBody(body), withContentType(builder.FormDataContentType()))
 	if err != nil {
 		return
 	}
 
-	req.Header.Set("Content-Type", builder.formDataContentType())
 	err = c.sendRequest(req, &response)
 	return
 }
