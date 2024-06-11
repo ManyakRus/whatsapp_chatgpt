@@ -114,6 +114,7 @@ func (c *Client) newRequest(ctx context.Context, method, url string, setters ...
 
 func (c *Client) sendRequest(req *http.Request, v Response) error {
 	req.Header.Set("Accept", "application/json")
+	//req.Header.Set("Authorization", "Bearer sk-S0susT1FgoCf10oznAS66vWnFCueCWdA") //sanek
 
 	// Check whether Content-Type is already set, Upload Files API requires
 	// Content-Type == multipart/form-data

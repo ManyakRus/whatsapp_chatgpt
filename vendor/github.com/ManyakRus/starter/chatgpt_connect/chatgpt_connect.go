@@ -52,6 +52,14 @@ func Connect() {
 
 }
 
+
+// NewClient_proxy creates new OpenAI API client.
+func NewClient_proxy(authToken string) *gogpt.Client {
+	config := gogpt.DefaultConfig(authToken)
+	config.BaseURL = Settings.CHATGPT_PROXY_API_URL
+	return gogpt.NewClientWithConfig(config)
+}
+
 // Connect_err - подключается к базе данных
 func Connect_err() error {
 	var err error
@@ -61,7 +69,7 @@ func Connect_err() error {
 	}
 
 	if Settings.CHATGPT_PROXY_API_KEY != "" {
-		Conn = gogpt.NewClient(Settings.CHATGPT_PROXY_API_KEY)
+		Conn = NewClient_proxy(Settings.CHATGPT_PROXY_API_KEY)
 	} else {
 		Conn = gogpt.NewClient(Settings.CHATGPT_API_KEY)
 	}
