@@ -5,28 +5,43 @@ filippo.io/edwards25519/field
 # github.com/ManyakRus/logrus v0.0.0-20231019115155-9e6fede0d792
 ## explicit; go 1.13
 github.com/ManyakRus/logrus
-# github.com/ManyakRus/starter v1.0.0
-## explicit; go 1.20
+# github.com/ManyakRus/starter v1.0.40
+## explicit; go 1.22
 github.com/ManyakRus/starter/chatgpt_connect
 github.com/ManyakRus/starter/config_main
 github.com/ManyakRus/starter/contextmain
+github.com/ManyakRus/starter/log
 github.com/ManyakRus/starter/logger
 github.com/ManyakRus/starter/micro
 github.com/ManyakRus/starter/stopapp
 github.com/ManyakRus/starter/whatsapp_connect
-# github.com/gorilla/websocket v1.5.1
+# github.com/google/uuid v1.6.0
+## explicit
+github.com/google/uuid
+# github.com/gorilla/websocket v1.5.2
 ## explicit; go 1.20
 github.com/gorilla/websocket
 # github.com/joho/godotenv v1.5.1
 ## explicit; go 1.12
 github.com/joho/godotenv
-# github.com/mattn/go-sqlite3 v1.14.19
-## explicit; go 1.16
+# github.com/mattn/go-colorable v0.1.13
+## explicit; go 1.15
+github.com/mattn/go-colorable
+# github.com/mattn/go-isatty v0.0.20
+## explicit; go 1.15
+github.com/mattn/go-isatty
+# github.com/mattn/go-sqlite3 v1.14.22
+## explicit; go 1.19
 github.com/mattn/go-sqlite3
 # github.com/mdp/qrterminal/v3 v3.2.0
 ## explicit; go 1.20
 github.com/mdp/qrterminal/v3
-# github.com/sashabaranov/go-openai v1.17.9
+# github.com/rs/zerolog v1.33.0
+## explicit; go 1.15
+github.com/rs/zerolog
+github.com/rs/zerolog/internal/cbor
+github.com/rs/zerolog/internal/json
+# github.com/sashabaranov/go-openai v1.24.1
 ## explicit; go 1.18
 github.com/sashabaranov/go-openai
 github.com/sashabaranov/go-openai/internal
@@ -58,19 +73,45 @@ go.mau.fi/libsignal/util/errorhelper
 go.mau.fi/libsignal/util/keyhelper
 go.mau.fi/libsignal/util/medium
 go.mau.fi/libsignal/util/optional
-# go.mau.fi/util v0.2.1
-## explicit; go 1.20
+# go.mau.fi/util v0.4.2
+## explicit; go 1.21
 go.mau.fi/util/jsontime
 go.mau.fi/util/random
 go.mau.fi/util/retryafter
-# go.mau.fi/whatsmeow v0.0.0-20231216213200-9d803dd92735
-## explicit; go 1.20
+# go.mau.fi/whatsmeow v0.0.0-20240603101645-64bc969fbe78
+## explicit; go 1.21
 go.mau.fi/whatsmeow
 go.mau.fi/whatsmeow/appstate
 go.mau.fi/whatsmeow/appstate/lthash
 go.mau.fi/whatsmeow/binary
 go.mau.fi/whatsmeow/binary/proto
 go.mau.fi/whatsmeow/binary/token
+go.mau.fi/whatsmeow/proto
+go.mau.fi/whatsmeow/proto/armadilloutil
+go.mau.fi/whatsmeow/proto/waAdv
+go.mau.fi/whatsmeow/proto/waArmadilloApplication
+go.mau.fi/whatsmeow/proto/waArmadilloXMA
+go.mau.fi/whatsmeow/proto/waCert
+go.mau.fi/whatsmeow/proto/waChatLockSettings
+go.mau.fi/whatsmeow/proto/waCommon
+go.mau.fi/whatsmeow/proto/waCompanionReg
+go.mau.fi/whatsmeow/proto/waConsumerApplication
+go.mau.fi/whatsmeow/proto/waDeviceCapabilities
+go.mau.fi/whatsmeow/proto/waE2E
+go.mau.fi/whatsmeow/proto/waEphemeral
+go.mau.fi/whatsmeow/proto/waHistorySync
+go.mau.fi/whatsmeow/proto/waMediaTransport
+go.mau.fi/whatsmeow/proto/waMmsRetry
+go.mau.fi/whatsmeow/proto/waMsgApplication
+go.mau.fi/whatsmeow/proto/waMsgTransport
+go.mau.fi/whatsmeow/proto/waMultiDevice
+go.mau.fi/whatsmeow/proto/waQuickPromotionSurfaces
+go.mau.fi/whatsmeow/proto/waServerSync
+go.mau.fi/whatsmeow/proto/waSyncAction
+go.mau.fi/whatsmeow/proto/waUserPassword
+go.mau.fi/whatsmeow/proto/waVnameCert
+go.mau.fi/whatsmeow/proto/waWa6
+go.mau.fi/whatsmeow/proto/waWeb
 go.mau.fi/whatsmeow/socket
 go.mau.fi/whatsmeow/store
 go.mau.fi/whatsmeow/store/sqlstore
@@ -81,31 +122,32 @@ go.mau.fi/whatsmeow/util/gcmutil
 go.mau.fi/whatsmeow/util/hkdfutil
 go.mau.fi/whatsmeow/util/keys
 go.mau.fi/whatsmeow/util/log
-# golang.org/x/crypto v0.17.0
+# golang.org/x/crypto v0.24.0
 ## explicit; go 1.18
 golang.org/x/crypto/curve25519
 golang.org/x/crypto/curve25519/internal/field
 golang.org/x/crypto/hkdf
 golang.org/x/crypto/pbkdf2
-# golang.org/x/net v0.19.0
+# golang.org/x/net v0.26.0
 ## explicit; go 1.18
 golang.org/x/net/internal/socks
 golang.org/x/net/proxy
-# golang.org/x/sys v0.15.0
+# golang.org/x/sys v0.21.0
 ## explicit; go 1.18
 golang.org/x/sys/plan9
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/term v0.15.0
+# golang.org/x/term v0.21.0
 ## explicit; go 1.18
 golang.org/x/term
-# google.golang.org/protobuf v1.32.0
+# google.golang.org/protobuf v1.34.1
 ## explicit; go 1.17
 google.golang.org/protobuf/encoding/prototext
 google.golang.org/protobuf/encoding/protowire
 google.golang.org/protobuf/internal/descfmt
 google.golang.org/protobuf/internal/descopts
 google.golang.org/protobuf/internal/detrand
+google.golang.org/protobuf/internal/editiondefaults
 google.golang.org/protobuf/internal/encoding/defval
 google.golang.org/protobuf/internal/encoding/messageset
 google.golang.org/protobuf/internal/encoding/tag

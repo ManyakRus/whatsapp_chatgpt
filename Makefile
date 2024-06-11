@@ -14,7 +14,7 @@ run:
 	./bin/app_race
 mod:
 	clear
-	go mod tidy -compat=1.18
+	go mod tidy -compat=1.22
 	go mod vendor
 	go fmt ./...
 build:
