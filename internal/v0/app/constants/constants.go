@@ -1,6 +1,6 @@
 package constants
 
-var AutoAnswer_Enabled = true
+var AutoAnswer_Enabled = false
 
 var TextEnabled = "ChatGPT enabled"
 

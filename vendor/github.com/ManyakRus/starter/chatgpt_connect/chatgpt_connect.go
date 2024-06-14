@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/ManyakRus/starter/logger"
+	"github.com/rugatling/go-openai"
 	"time"
 
 	//"github.com/jackc/pgconn"
@@ -52,8 +53,7 @@ func Connect() {
 
 }
 
-
-// NewClient_proxy creates new OpenAI API client.
+// NewClient_proxy creates new OpenAI API client with another base URL ("https://api.proxyapi.ru/openai/v1")
 func NewClient_proxy(authToken string) *gogpt.Client {
 	config := gogpt.DefaultConfig(authToken)
 	config.BaseURL = Settings.CHATGPT_PROXY_API_URL
@@ -64,7 +64,7 @@ func NewClient_proxy(authToken string) *gogpt.Client {
 func Connect_err() error {
 	var err error
 
-	if Settings.CHATGPT_API_KEY == "" {
+	if Settings.CHATGPT_API_KEY == "" && Settings.CHATGPT_PROXY_API_KEY == "" {
 		FillSettings()
 	}
 
@@ -193,11 +193,18 @@ func SendMessage(Text string, user string) (string, error) {
 	ctx, cancel := context.WithTimeout(ctxMain, 600*time.Second)
 	defer cancel()
 
+	Messages := []gogpt.ChatCompletionMessage{
+		{
+			Content: Text,
+			Role:    openai.ChatMessageRoleSystem,
+		},
+	}
+
 	req := gogpt.ChatCompletionRequest{
 		Model:     gogpt.GPT4o, //надо gogpt.GPT3TextDavinci003
 		MaxTokens: 2048,
-		//Prompt:    Text,
-		User: user,
+		Messages:  Messages,
+		User:      user,
 	}
 	resp, err := Conn.CreateChatCompletion(ctx, req)
 	if err != nil {
@@ -210,36 +217,6 @@ func SendMessage(Text string, user string) (string, error) {
 	} else {
 		err = errors.New("error: no response")
 	}
-	//fmt.Println("Otvet: ", resp.Choices[0].Text)
-
-	//req := gogpt.CompletionRequest{
-	//	Model:     gogpt.GPT3Ada,
-	//	MaxTokens: 5,
-	//	Prompt:    Text,
-	//	Stream:    true,
-	//}
-	//stream, err := Conn.CreateCompletionStream(ctx, req)
-	//if err != nil {
-	//	return Otvet, err
-	//}
-	//defer stream.Close()
-	//
-	//for {
-	//	response, err := stream.Recv()
-	//	Otvet = response
-	//	if errors.Is(err, io.EOF) {
-	//		fmt.Println("Stream finished")
-	//		err = nil
-	//		return Otvet, err
-	//	}
-	//
-	//	if err != nil {
-	//		fmt.Printf("Stream error: %v\n", err)
-	//		return Otvet, err
-	//	}
-	//
-	//	fmt.Printf("Stream response: %v\n", response)
-	//}
 
 	return Otvet, err
 }
