@@ -16,17 +16,19 @@ Skype login: Travianbot
 2. Заполнить настройки в файл .env:
 WHATSAPP_PHONE_FROM - ваш номер телефона в WhatsApp мессенджере, 
 в формате "7ХХХХХХХХХХ" для России
+```
 CHATGPT_API_KEY - API_KEY из пункта (1)
 CHATGPT_NAME - имя для отображения в чате = "Автоответчик:"
 CHATGPT_START_TEXT - текст начала запроса для ChatGPT
 CHATGPT_END_TEXT - текст окончания запроса для ChatGPT
  =" Ответь на русском языке от имени мужчины."
-
+```
 Можно подключаться через прокси proxyapi.ru (для русских пользователей),
 если заполнить параметры:
+```
 CHATGPT_PROXY_API_URL="https://api.proxyapi.ru/openai/v1"
 CHATGPT_PROXY_API_KEY=
-
+```
 
 3. Скомпилировать код и запустить файл
 whatsapp_chatgpt
