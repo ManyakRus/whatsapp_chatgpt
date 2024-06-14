@@ -16,17 +16,19 @@ and get API_KEY there (free)
 2. Fill in the settings in the .env file:
 WHATSAPP_PHONE_FROM - your phone number in whatsapp messenger,
 in the format "7ХХХХХХХХХ" for Russia
+```
 CHATGPT_API_KEY - API_KEY from item (1)
 CHATGPT_NAME - name to display in chat = "Autoresponder:"
 CHATGPT_START_TEXT - ChatGPT start request text
 CHATGPT_END_TEXT - ChatGPT request end text
   =" Answer in Russian on behalf of the man."
-
+```
 You can connect through a proxy proxyapi.ru (for Russian users),
 if you fill in the parameters:
+```
 CHATGPT_PROXY_API_URL="https://api.proxyapi.ru/openai/v1"
 CHATGPT_PROXY_API_KEY=
-
+```
 
 3. Compile the code and run the file
 whatsapp_chatgpt
