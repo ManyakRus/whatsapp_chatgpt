@@ -5,7 +5,6 @@ import (
 	"github.com/ManyakRus/starter/chatgpt_connect"
 	"github.com/ManyakRus/starter/contextmain"
 	"github.com/ManyakRus/starter/log"
-	"github.com/ManyakRus/starter/micro"
 	"github.com/ManyakRus/starter/telegram_client"
 	"github.com/ManyakRus/whatsapp_chatgpt/internal/constants"
 	"github.com/gotd/td/telegram/message"
@@ -26,7 +25,7 @@ func OnNewMessage(ctx context.Context, entities tg.Entities, u *tg.UpdateNewMess
 	}
 
 	mess := telegram_client.FillMessageTelegramFromMessage(m)
-	log.Debug("new telegram message:\n%v\n", mess.String())
+	log.Debugf("new telegram message:\n%v\n", mess.String())
 
 	ReceiveMessage(mess, entities, u)
 
@@ -112,18 +111,18 @@ func ReceiveMessage(mess telegram_client.MessageTelegram, entities tg.Entities, 
 	}
 
 	OtvetGPT := "test"
-	//Отправка в ChatGPT
-	TextRequest := mess.Text
-	Name := micro.StringFromInt64(mess.FromID)
-	OtvetGPT, err = chatgpt_connect.SendMessage(TextRequest, Name)
-	if err != nil {
-		log.Error("chatgpt_connect.SendMessage() error: ", err)
-		return
-	}
-	if OtvetGPT == "" {
-		log.Debug("error: response text gpt=''")
-		return
-	}
+	////Отправка в ChatGPT
+	//TextRequest := mess.Text
+	//Name := micro.StringFromInt64(mess.FromID)
+	//OtvetGPT, err = chatgpt_connect.SendMessage(TextRequest, Name)
+	//if err != nil {
+	//	log.Error("chatgpt_connect.SendMessage() error: ", err)
+	//	return
+	//}
+	//if OtvetGPT == "" {
+	//	log.Debug("error: response text gpt=''")
+	//	return
+	//}
 
 	//Отправка в Telegram
 	//PhoneTo := micro.StringFromInt64(mess.FromID)
@@ -146,7 +145,8 @@ func SendMessage_WithChatGPTName(entities tg.Entities, u *tg.UpdateNewMessage, T
 
 	api := telegram_client.Client.API()
 	sender := message.NewSender(api)
-	_, err := sender.Answer(entities, u).Text(ctx, TextMess)
+	rb := sender.Answer(entities, u)
+	_, err := rb.Text(ctx, TextMess)
 	if err != nil {
 		log.Error("Answer() error: ", err)
 	}
