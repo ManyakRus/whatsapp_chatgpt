@@ -5,7 +5,7 @@ go 1.22
 toolchain go1.22.1
 
 require (
-	github.com/ManyakRus/starter v1.0.45
+	github.com/ManyakRus/starter v1.0.48
 	github.com/gotd/td v0.103.0
 	go.mau.fi/whatsmeow v0.0.0-20240603101645-64bc969fbe78
 )

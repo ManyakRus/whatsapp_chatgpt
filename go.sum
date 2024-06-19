@@ -6,6 +6,12 @@ github.com/ManyakRus/starter v1.0.44 h1:8+N2iHb3L4LskKFuS2Je0BNJQsAZNKnTL8NJgqaG
 github.com/ManyakRus/starter v1.0.44/go.mod h1:+qHuQMFsF+OmHfe4CADgehdvWdKyWFOaaaFXJFS/dRI=
 github.com/ManyakRus/starter v1.0.45 h1:cU/ZLdUeUXob5p5loDVkqug2h485cCGzca5ZKOSbvJo=
 github.com/ManyakRus/starter v1.0.45/go.mod h1:+qHuQMFsF+OmHfe4CADgehdvWdKyWFOaaaFXJFS/dRI=
+github.com/ManyakRus/starter v1.0.46 h1:vGsb+kRjP8qyMK2vSBH/b/l6RWX3UHRwFa1e9D3dWco=
+github.com/ManyakRus/starter v1.0.46/go.mod h1:+qHuQMFsF+OmHfe4CADgehdvWdKyWFOaaaFXJFS/dRI=
+github.com/ManyakRus/starter v1.0.47 h1:dm7/qLR4yzeFpco84sUAOu73wLorWLqE0qFD126nKJs=
+github.com/ManyakRus/starter v1.0.47/go.mod h1:+qHuQMFsF+OmHfe4CADgehdvWdKyWFOaaaFXJFS/dRI=
+github.com/ManyakRus/starter v1.0.48 h1:PMLB1MFJmaeTFdhwaisPg0K5HV8fn0Cbn0IG+w0vvwM=
+github.com/ManyakRus/starter v1.0.48/go.mod h1:+qHuQMFsF+OmHfe4CADgehdvWdKyWFOaaaFXJFS/dRI=
 github.com/cenkalti/backoff/v4 v4.3.0 h1:MyRJ/UdXutAwSAT+s3wNd7MfTIcy71VQueUuFK343L8=
 github.com/cenkalti/backoff/v4 v4.3.0/go.mod h1:Y3VNntkOUPxTVeUxJ/G5vcM//AlwfmyYozVcomhLiZE=
 github.com/coreos/go-systemd/v22 v22.5.0/go.mod h1:Y58oyj3AT4RCenI/lSvhwexgC+NSVTIJ3seZv2GcEnc=

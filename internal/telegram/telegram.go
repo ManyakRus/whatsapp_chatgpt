@@ -2,31 +2,18 @@ package telegram
 
 import (
 	"context"
-	"fmt"
 	"github.com/ManyakRus/starter/chatgpt_connect"
 	"github.com/ManyakRus/starter/contextmain"
 	"github.com/ManyakRus/starter/log"
+	"github.com/ManyakRus/starter/micro"
 	"github.com/ManyakRus/starter/telegram_client"
 	"github.com/ManyakRus/whatsapp_chatgpt/internal/constants"
+	"github.com/gotd/td/telegram/message"
 	"github.com/gotd/td/tg"
 	_ "github.com/gotd/td/tgerr"
-	"reflect"
 	"strings"
 	"time"
 )
-
-// MessageTelegram - сообщение из WhatsApp сокращённо
-type MessageTelegram struct {
-	Text      string
-	FromID    int64
-	ChatID    int64
-	IsFromMe  bool
-	MediaType string
-	//NameTo    string
-	IsGroup  bool
-	ID       int
-	TimeSent time.Time
-}
 
 // OnNewMessage - функция для получения новых сообщений
 func OnNewMessage(ctx context.Context, entities tg.Entities, u *tg.UpdateNewMessage) error {
@@ -38,9 +25,10 @@ func OnNewMessage(ctx context.Context, entities tg.Entities, u *tg.UpdateNewMess
 		return nil
 	}
 
-	mess := FillMessageTelegram(m)
-	log.Printf("new telegram message:\n%v\n", mess.String())
-	ReceiveMessage(mess)
+	mess := telegram_client.FillMessageTelegramFromMessage(m)
+	log.Debug("new telegram message:\n%v\n", mess.String())
+
+	ReceiveMessage(mess, entities, u)
 
 	//// тестовый пример эхо
 	//// Helper for sending messages.
@@ -54,7 +42,7 @@ func OnNewMessage(ctx context.Context, entities tg.Entities, u *tg.UpdateNewMess
 }
 
 // ReceiveMessage - обработка полученного сообщения от WhatsApp
-func ReceiveMessage(mess MessageTelegram) {
+func ReceiveMessage(mess telegram_client.MessageTelegram, entities tg.Entities, u *tg.UpdateNewMessage) {
 	var err error
 
 	if mess.Text == "" {
@@ -69,10 +57,11 @@ func ReceiveMessage(mess MessageTelegram) {
 		return
 	}
 
-	if mess.IsFromMe == true {
+	//сообщение от меня и мне
+	if mess.IsFromMe == true && mess.FromID == telegram_client.UserSelf.ID {
 		//ON
 		if strings.ToLower(mess.Text) == "on" {
-			constants.Whatsapp_AutoAnswer_Enabled = true
+			constants.Telegram_AutoAnswer_Enabled = true
 			Text := constants.TextEnabled
 			log.Info(Text)
 			_, err = telegram_client.SendMessage(telegram_client.Settings.TELEGRAM_PHONE_FROM, Text)
@@ -84,7 +73,7 @@ func ReceiveMessage(mess MessageTelegram) {
 
 		//OFF
 		if strings.ToLower(mess.Text) == "off" {
-			constants.Whatsapp_AutoAnswer_Enabled = false
+			constants.Telegram_AutoAnswer_Enabled = false
 			Text := constants.TextDisabled
 			log.Info(Text)
 			_, err = telegram_client.SendMessage(telegram_client.Settings.TELEGRAM_PHONE_FROM, Text)
@@ -122,93 +111,28 @@ func ReceiveMessage(mess MessageTelegram) {
 		return
 	}
 
-	////Отправка в ChatGPT
-	//TextRequest := mess.Text
-	//OtvetGPT, err := chatgpt_connect.SendMessage(TextRequest, mess.NameFrom)
-	//if err != nil {
-	//	log.Error("chatgpt_connect.SendMessage() error: ", err)
-	//	return
-	//}
-	//if OtvetGPT == "" {
-	//	log.Debug("error: response text gpt=''")
-	//	return
-	//}
-	//
-	////Отправка в WhatsApp
-	//SendMessage_WithChatGPTName(mess.FromID, OtvetGPT)
-
-}
-
-// FillMessageTelegram - заполнение струткру MessageTelegram из сообщения от Telegram
-func FillMessageTelegram(m *tg.Message) MessageTelegram {
-	Otvet := MessageTelegram{}
-
-	ctxMain := contextmain.GetContext()
-	IsGroup := false
-
-	Otvet.Text = m.Message
-	Otvet.ID = m.ID
-	Otvet.MediaType = m.TypeName()
-	TimeInt := m.GetDate()
-	Otvet.TimeSent = time.UnixMilli(int64(TimeInt * 1000))
-	var ChatID int64
-
-	if m.PeerID != nil && CheckNilInterface(m.PeerID) == false {
-		switch v := m.PeerID.(type) {
-		case *tg.PeerUser:
-			ChatID = v.UserID
-		case *tg.PeerChat:
-			{
-				ChatID = v.ChatID
-				IsGroup = true
-			}
-		case *tg.PeerChannel:
-			{
-				ChatID = v.ChannelID
-				IsGroup = true
-			}
-		default:
-			{
-				IsGroup = true
-			}
-		}
-	}
-	Otvet.ChatID = ChatID
-
-	MyUser, err := telegram_client.Client.Self(ctxMain)
+	OtvetGPT := "test"
+	//Отправка в ChatGPT
+	TextRequest := mess.Text
+	Name := micro.StringFromInt64(mess.FromID)
+	OtvetGPT, err = chatgpt_connect.SendMessage(TextRequest, Name)
 	if err != nil {
-		return Otvet
+		log.Error("chatgpt_connect.SendMessage() error: ", err)
+		return
 	}
-	MyID := MyUser.ID
-	var SenderID int64
-
-	IsFromMe := false
-	if m.FromID != nil && CheckNilInterface(m.FromID) == false {
-		switch v := m.FromID.(type) {
-		case *tg.PeerUser:
-			{
-				SenderID = v.UserID
-			}
-		//case *tg.PeerChat: // peerChat#36c6019a
-		//case *tg.PeerChannel: // peerChannel#a2a5371e
-		default:
-		}
-	} else {
-		IsFromMe = true
+	if OtvetGPT == "" {
+		log.Debug("error: response text gpt=''")
+		return
 	}
-	Otvet.IsGroup = IsGroup //m.GroupedID != 0
 
-	if MyID == SenderID {
-		IsFromMe = true
-	}
-	Otvet.IsFromMe = IsFromMe
-	Otvet.FromID = SenderID
+	//Отправка в Telegram
+	//PhoneTo := micro.StringFromInt64(mess.FromID)
+	SendMessage_WithChatGPTName(entities, u, OtvetGPT)
 
-	return Otvet
 }
 
-// SendMessage_WithChatGPTName - отправка сообщения в WhatsApp с добавлением имени CHATGPT_NAME
-func SendMessage_WithChatGPTName(PhoneFrom, TextMess string) {
+// SendMessage_WithChatGPTName - отправка сообщения в Telegram с добавлением имени CHATGPT_NAME
+func SendMessage_WithChatGPTName(entities tg.Entities, u *tg.UpdateNewMessage, TextMess string) {
 
 	TextMess = strings.Trim(TextMess, "\n")
 
@@ -216,38 +140,15 @@ func SendMessage_WithChatGPTName(PhoneFrom, TextMess string) {
 		TextMess = chatgpt_connect.Settings.CHATGPT_NAME + "\n" + TextMess
 	}
 
-	_, err := telegram_client.SendMessage(PhoneFrom, TextMess)
+	ctxMain := contextmain.GetContext()
+	ctx, cancel := context.WithTimeout(ctxMain, time.Second*60)
+	defer cancel()
+
+	api := telegram_client.Client.API()
+	sender := message.NewSender(api)
+	_, err := sender.Answer(entities, u).Text(ctx, TextMess)
 	if err != nil {
-		log.Error("telegram_client.SendMessage() error: ", err)
+		log.Error("Answer() error: ", err)
 	}
 
-}
-
-// CheckNilInterface - проверка интерфейса на nil
-func CheckNilInterface(i any) bool {
-	iv := reflect.ValueOf(i)
-	if !iv.IsValid() {
-		return true
-	}
-
-	switch iv.Kind() {
-	case reflect.Ptr, reflect.Slice, reflect.Map, reflect.Func, reflect.Interface:
-		return iv.IsNil()
-	default:
-		return false
-	}
-}
-
-func (m MessageTelegram) String() string {
-	Otvet := ""
-
-	Otvet = Otvet + fmt.Sprint("Text: ", m.Text, "\n")
-	Otvet = Otvet + fmt.Sprint("MediaType: ", m.MediaType, "\n")
-	Otvet = Otvet + fmt.Sprint("FromID: ", m.FromID, "\n")
-	Otvet = Otvet + fmt.Sprint("IsFromMe: ", m.IsFromMe, "\n")
-	Otvet = Otvet + fmt.Sprint("IsGroup: ", m.IsGroup, "\n")
-	Otvet = Otvet + fmt.Sprint("ID: ", m.ID, "\n")
-	Otvet = Otvet + fmt.Sprint("TimeSent: ", m.TimeSent, "\n")
-
-	return Otvet
 }

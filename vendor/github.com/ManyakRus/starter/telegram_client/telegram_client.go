@@ -36,6 +36,9 @@ var filenameSession string
 // Client - клиент соединения мессенджера Телеграм
 var Client *telegram.Client
 
+// UserSelf - собственный юзер в Телеграм
+var UserSelf *tg.User
+
 // lastSendTime - время последней отправки сообщения и мьютекс
 var lastSendTime = lastSendTimeMutex{}
 
@@ -71,6 +74,34 @@ type SettingsINI struct {
 	TELEGRAM_APP_HASH        string
 	TELEGRAM_PHONE_FROM      string
 	TELEGRAM_PHONE_SEND_TEST string
+}
+
+// MessageTelegram - сообщение из Telegram сокращённо
+type MessageTelegram struct {
+	Text      string
+	FromID    int64
+	ChatID    int64
+	IsFromMe  bool
+	MediaType string
+	//NameTo    string
+	IsGroup  bool
+	ID       int
+	TimeSent time.Time
+}
+
+// String - возвращает строку из структуры
+func (m MessageTelegram) String() string {
+	Otvet := ""
+
+	Otvet = Otvet + fmt.Sprint("Text: ", m.Text, "\n")
+	Otvet = Otvet + fmt.Sprint("MediaType: ", m.MediaType, "\n")
+	Otvet = Otvet + fmt.Sprint("FromID: ", m.FromID, "\n")
+	Otvet = Otvet + fmt.Sprint("IsFromMe: ", m.IsFromMe, "\n")
+	Otvet = Otvet + fmt.Sprint("IsGroup: ", m.IsGroup, "\n")
+	Otvet = Otvet + fmt.Sprint("ID: ", m.ID, "\n")
+	Otvet = Otvet + fmt.Sprint("TimeSent: ", m.TimeSent, "\n")
+
+	return Otvet
 }
 
 // SendMessage - отправка сообщения в мессенджер Телеграм
@@ -129,31 +160,31 @@ func SendMessage(phone_send_to string, text string) (int, error) {
 	UpdatesClass, err := target.Text(ctx, text)
 
 	//проверка на ошибки
-	isFlood := false
-	if err != nil {
-		textFind := "peer: can't resolve phone"
-		if micro.SubstringLeft(err.Error(), len(textFind)) == textFind {
-			err2 := AddContact(ctx, phone_send_to)
-
-			isFlood = FloodWait(ctx, err2) //ожидание при ошибке FloodWait
-			if isFlood {
-				return SendMessage(phone_send_to, text)
-			}
-
-			if err2 == nil {
-				return SendMessage(phone_send_to, text)
-			} else {
-				log.Error("not send, text: " + err.Error())
-				return 0, err
-			}
-		} else {
-			isFlood = FloodWait(ctx, err) //ожидание при ошибке FloodWait
-			if isFlood {
-				return SendMessage(phone_send_to, text)
-			}
-		}
-
-	}
+	//isFlood := false
+	//if err != nil {
+	//	textFind := "peer: can't resolve phone"
+	//	if micro.SubstringLeft(err.Error(), len(textFind)) == textFind {
+	//		err2 := AddContact(ctx, phone_send_to)
+	//
+	//		isFlood = FloodWait(ctx, err2) //ожидание при ошибке FloodWait
+	//		if isFlood {
+	//			return SendMessage(phone_send_to, text)
+	//		}
+	//
+	//		if err2 == nil {
+	//			return SendMessage(phone_send_to, text)
+	//		} else {
+	//			log.Error("not send, text: " + err.Error())
+	//			return 0, err
+	//		}
+	//	} else {
+	//		isFlood = FloodWait(ctx, err) //ожидание при ошибке FloodWait
+	//		if isFlood {
+	//			return SendMessage(phone_send_to, text)
+	//		}
+	//	}
+	//
+	//}
 
 	if UpdatesClass != nil {
 		id = findIdFromUpdatesClass(UpdatesClass)
@@ -404,8 +435,20 @@ func TimeLimit() {
 	lastSendTime.time = time.Now()
 }
 
-// ConnectTelegram подключение к серверу Телеграм
-func ConnectTelegram() error {
+// ConnectTelegram подключение к серверу Телеграм, паника при ошибке
+func ConnectTelegram() {
+	err := ConnectTelegram_err()
+	if err != nil {
+		TextError := fmt.Sprint("Telegram connected: ", Settings.TELEGRAM_PHONE_FROM)
+		log.Error(TextError)
+		panic(TextError)
+	} else {
+		log.Info("Telegram connected: ", Settings.TELEGRAM_PHONE_FROM)
+	}
+}
+
+// ConnectTelegram_err подключение к серверу Телеграм
+func ConnectTelegram_err() error {
 
 	ctxMain := context.Background()
 	//ctxMain := contextmain.GetContext()
@@ -417,7 +460,8 @@ func ConnectTelegram() error {
 	//Option := bg.WithContext(ctx)
 	stopTelegramFunc, err = bg.Connect(Client)
 	if err != nil {
-		log.Fatalln("Can not connect to Telegram ! Error: ", err)
+		return err
+		//log.Fatalln("Can not connect to Telegram ! Error: ", err)
 	}
 
 	micro.Sleep(100) //не успевает
@@ -437,6 +481,12 @@ func ConnectTelegram() error {
 	)
 
 	if err := Client.Auth().IfNecessary(ctx, flow); err != nil {
+		return err
+	}
+
+	//заполним UserSelf
+	UserSelf, err = Client.Self(ctx)
+	if err != nil {
 		return err
 	}
 
@@ -599,7 +649,7 @@ func AsFloodWait(err error) (d int, ok bool) {
 func StartTelegram(func_OnNewMessage func(ctx context.Context, entities tg.Entities, u *tg.UpdateNewMessage) error) {
 	CreateTelegramClient(func_OnNewMessage)
 
-	err := ConnectTelegram()
+	err := ConnectTelegram_err()
 	if err != nil {
 		log.Fatalln("Can not login to telegram ! Error: ", err)
 	}
@@ -633,4 +683,87 @@ func FillSettings() {
 		log.Info("Need fill TELEGRAM_PHONE_SEND_TEST ! in os.ENV ")
 	}
 
+}
+
+// FillMessageTelegramFromMessage - заполнение струткру MessageTelegram из сообщения от Telegram
+func FillMessageTelegramFromMessage(m *tg.Message) MessageTelegram {
+	Otvet := MessageTelegram{}
+
+	//не подключен
+	if Client == nil {
+		return Otvet
+	}
+
+	////не подключен
+	//if stopTelegramFunc == nil {
+	//	return Otvet
+	//}
+
+	//не подключен
+	if UserSelf == nil {
+		return Otvet
+	}
+
+	//
+	//ctxMain := contextmain.GetContext()
+	//ctx, cancel_func := context.WithTimeout(ctxMain, 60*time.Second) //60
+	//defer cancel_func()
+	IsGroup := false
+
+	Otvet.Text = m.Message
+	Otvet.ID = m.ID
+	Otvet.MediaType = m.TypeName()
+	TimeInt := m.GetDate()
+	Otvet.TimeSent = time.UnixMilli(int64(TimeInt * 1000))
+	var ChatID int64
+
+	if m.PeerID != nil && micro.IsNilInterface(m.PeerID) == false {
+		switch v := m.PeerID.(type) {
+		case *tg.PeerUser:
+			ChatID = v.UserID
+		case *tg.PeerChat:
+			{
+				ChatID = v.ChatID
+				IsGroup = true
+			}
+		case *tg.PeerChannel:
+			{
+				ChatID = v.ChannelID
+				IsGroup = true
+			}
+		default:
+			{
+				IsGroup = true
+			}
+		}
+	}
+	Otvet.ChatID = ChatID
+
+	MyID := UserSelf.ID
+	var SenderID int64
+
+	IsFromMe := false
+	if m.FromID != nil && micro.IsNilInterface(m.FromID) == false {
+		switch v := m.FromID.(type) {
+		case *tg.PeerUser:
+			{
+				SenderID = v.UserID
+			}
+		//case *tg.PeerChat: // peerChat#36c6019a
+		//case *tg.PeerChannel: // peerChannel#a2a5371e
+		default:
+		}
+	} else {
+		IsFromMe = true
+		SenderID = UserSelf.ID
+	}
+	Otvet.IsGroup = IsGroup //m.GroupedID != 0
+
+	if MyID == SenderID {
+		IsFromMe = true
+	}
+	Otvet.IsFromMe = IsFromMe
+	Otvet.FromID = SenderID
+
+	return Otvet
 }

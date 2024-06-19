@@ -5,7 +5,7 @@ filippo.io/edwards25519/field
 # github.com/ManyakRus/logrus v0.0.0-20231019115155-9e6fede0d792
 ## explicit; go 1.13
 github.com/ManyakRus/logrus
-# github.com/ManyakRus/starter v1.0.45
+# github.com/ManyakRus/starter v1.0.48
 ## explicit; go 1.22
 github.com/ManyakRus/starter/chatgpt_connect
 github.com/ManyakRus/starter/config_main
