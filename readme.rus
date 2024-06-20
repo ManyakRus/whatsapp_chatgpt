@@ -30,6 +30,16 @@ CHATGPT_PROXY_API_URL="https://api.proxyapi.ru/openai/v1"
 CHATGPT_PROXY_API_KEY=
 ```
 
+Telegam:
+```
+TELEGRAM_ENABLED=false
+TELEGRAM_APP_ID=
+TELEGRAM_APP_HASH=
+TELEGRAM_PHONE_FROM=
+```
+You can find your APP_ID and APP_HASH from website:
+https://my.telegram.org/apps
+
 3. Скомпилировать код и запустить файл
 whatsapp_chatgpt
 4. После запуска надо отсканировать QR-код

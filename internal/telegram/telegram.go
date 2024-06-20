@@ -14,6 +14,9 @@ import (
 	"time"
 )
 
+// Contacts - список контактов в Telegram
+var Contacts *tg.ContactsContacts
+
 // OnNewMessage - функция для получения новых сообщений
 func OnNewMessage(ctx context.Context, entities tg.Entities, u *tg.UpdateNewMessage) error {
 	var err error
@@ -151,4 +154,23 @@ func SendMessage_WithChatGPTName(entities tg.Entities, u *tg.UpdateNewMessage, T
 		log.Error("Answer() error: ", err)
 	}
 
+}
+
+// ContactsGetContacts - обновляет список контактов
+func ContactsGetContacts() {
+	ctxMain := contextmain.GetContext()
+	ctx, cancel_func := context.WithTimeout(ctxMain, time.Second*60)
+	defer cancel_func()
+	IContacts, err := telegram_client.Client.API().ContactsGetContacts(ctx, 0)
+	if err != nil {
+		log.Error("ContactsGetContacts() error: ", err)
+		return
+	}
+	ok := false
+	Contacts, ok = IContacts.(*tg.ContactsContacts)
+	if ok == false {
+		log.Error("IContacts() error: ", err)
+		return
+	}
+	log.Debug("Contacts len: ", len(Contacts.Contacts))
 }

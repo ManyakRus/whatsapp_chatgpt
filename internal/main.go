@@ -38,6 +38,7 @@ func StartApp() {
 	if config.Settings.TELEGRAM_ENABLED == true {
 		telegram_client.CreateTelegramClient(telegram.OnNewMessage)
 		telegram_client.ConnectTelegram()
+		telegram.ContactsGetContacts()
 	}
 
 	stopapp.GetWaitGroup_Main().Wait()
