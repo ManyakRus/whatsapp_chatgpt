@@ -148,10 +148,13 @@ func SendMessage_WithChatGPTName(entities tg.Entities, u *tg.UpdateNewMessage, T
 
 	api := telegram_client.Client.API()
 	sender := message.NewSender(api)
+	//rb := sender.Reply(entities, u)
 	rb := sender.Answer(entities, u)
-	_, err := rb.Text(ctx, TextMess)
+	UpdateClass1, err := rb.Text(ctx, TextMess)
 	if err != nil {
 		log.Error("Answer() error: ", err)
+	} else {
+		log.Debug("Answer: ", UpdateClass1)
 	}
 
 }
