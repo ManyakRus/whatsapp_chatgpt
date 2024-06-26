@@ -44,6 +44,7 @@ https://my.telegram.org/apps
 3. Скомпилировать код и запустить файл
 для linux:
 >make mod
+
 >whatsapp_chatgpt
 4. После запуска надо отсканировать QR-код
 с экрана монитора в WhatsApp в телефоне.
