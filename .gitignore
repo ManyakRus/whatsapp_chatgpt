@@ -18,3 +18,7 @@
 /updates.bolt.db
 /peers.pebble.db/
 /log/
+/bin/log/
+/bin/peers.pebble.db/
+/bin/session.txt
+/bin/updates.bolt.db
