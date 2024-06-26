@@ -1,6 +1,5 @@
-Автоответчик для мессенджера WhatsApp, с искуственным интеллектом ChatGPT
+Автоответчик для мессенджера WhatsApp и Telegram, с искуственным интеллектом ChatGPT
 Сделал Александр Никитин
-Skype login: Travianbot
 
 Умеет:
 - автоматически отвечать на сообщения пользователей,
@@ -12,27 +11,29 @@ Skype login: Travianbot
 
 Для начала работы:
 1. Зарегистрироваться на сайте www.openai.com
-и получить там API_KEY (бесплатно)
-2. Заполнить настройки в файл .env:
-WHATSAPP_PHONE_FROM - ваш номер телефона в WhatsApp мессенджере, 
-в формате "7ХХХХХХХХХХ" для России
+и получить там API_KEY (платно),
+или на сайте www.proxyapi.ru (платно, для русских пользователей)
+2. Заполнить настройки в файл settings.txt (или .env):
 ```
-CHATGPT_API_KEY - API_KEY из пункта (1)
-CHATGPT_NAME - имя для отображения в чате = "Автоответчик:"
-CHATGPT_START_TEXT - текст начала запроса для ChatGPT
-CHATGPT_END_TEXT - текст окончания запроса для ChatGPT
+WHATSAPP_ENABLED=true
+WHATSAPP_PHONE_FROM= ваш номер телефона в WhatsApp мессенджере, 
+в формате "7ХХХХХХХХХХ" для России
+CHATGPT_API_KEY= API_KEY из пункта (1)
+CHATGPT_NAME= имя для отображения в чате = "Автоответчик:"
+CHATGPT_START_TEXT= текст начала запроса для ChatGPT
+CHATGPT_END_TEXT= текст окончания запроса для ChatGPT
  =" Ответь на русском языке от имени мужчины."
 ```
 Можно подключаться через прокси proxyapi.ru (для русских пользователей),
 если заполнить параметры:
 ```
 CHATGPT_PROXY_API_URL="https://api.proxyapi.ru/openai/v1"
-CHATGPT_PROXY_API_KEY=
+CHATGPT_PROXY_API_KEY= API_KEY с сайта proxyapi.ru
 ```
 
-Telegam:
+Для использования в мессенджере Telegam:
 ```
-TELEGRAM_ENABLED=false
+TELEGRAM_ENABLED=true
 TELEGRAM_APP_ID=
 TELEGRAM_APP_HASH=
 TELEGRAM_PHONE_FROM=
@@ -41,15 +42,20 @@ You can find your APP_ID and APP_HASH from website:
 https://my.telegram.org/apps
 
 3. Скомпилировать код и запустить файл
-whatsapp_chatgpt
+для linux:
+>make mod
+>whatsapp_chatgpt
 4. После запуска надо отсканировать QR-код
-с экрана монитора в WhatsApp в телефоне
-5. Написать самому себе в WhatsApp сообщение:
+с экрана монитора в WhatsApp в телефоне.
+В Telegram придёт сообщение от пользователя "Telegram" с кодом,
+который надо ввести в консоль для подтверждения подключения.
+5. Написать самому себе в WhatsApp(и Telegram) сообщение:
 On = включить автоответчик
 Off = выключить автоответчик
 
+
 Тестировал на Linux Ubuntu 20.04.5, Windows 10
-Версия риадми от: 06.03.2022
+Версия риадми от: 26.06.2024
 
 Исходный код открыт:
 https://github.com/ManyakRus/whatsapp_chatgpt

@@ -17,3 +17,4 @@
 /log.jsonl
 /updates.bolt.db
 /peers.pebble.db/
+/log/

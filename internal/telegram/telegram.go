@@ -5,8 +5,10 @@ import (
 	"github.com/ManyakRus/starter/chatgpt_connect"
 	"github.com/ManyakRus/starter/contextmain"
 	"github.com/ManyakRus/starter/log"
+	"github.com/ManyakRus/starter/micro"
 	"github.com/ManyakRus/starter/telegram_client"
 	"github.com/ManyakRus/whatsapp_chatgpt/internal/constants"
+	"github.com/gotd/contrib/storage"
 	"github.com/gotd/td/telegram/message"
 	"github.com/gotd/td/tg"
 	_ "github.com/gotd/td/tgerr"
@@ -18,33 +20,25 @@ import (
 var Contacts *tg.ContactsContacts
 
 // OnNewMessage - функция для получения новых сообщений
-func OnNewMessage(ctx context.Context, entities tg.Entities, u *tg.UpdateNewMessage) error {
+func OnNewMessage(ctx context.Context, entities tg.Entities, u *tg.UpdateNewMessage, Peer1 storage.Peer) error {
 	var err error
 
-	m, ok := u.Message.(*tg.Message)
-	if !ok || m.Out {
+	msg, ok := u.Message.(*tg.Message)
+	if !ok || msg.Out {
 		// Outgoing message, not interesting.
 		return nil
 	}
 
-	mess := telegram_client.FillMessageTelegramFromMessage(m)
+	mess := telegram_client.FillMessageTelegramFromMessage(msg)
 	log.Debugf("new telegram message:\n%v\n", mess.String())
 
-	ReceiveMessage(mess, entities, u)
-
-	//// тестовый пример эхо
-	//// Helper for sending messages.
-	//api := telegram_client.Client.API()
-	//sender := message.NewSender(api)
-	//
-	//// Sending reply.
-	//_, err = sender.Reply(entities, u).Text(ctx, m.Message)
+	ReceiveMessage(mess, Peer1)
 
 	return err
 }
 
-// ReceiveMessage - обработка полученного сообщения от WhatsApp
-func ReceiveMessage(mess telegram_client.MessageTelegram, entities tg.Entities, u *tg.UpdateNewMessage) {
+// ReceiveMessage - обработка полученного сообщения от Telegram
+func ReceiveMessage(mess telegram_client.MessageTelegram, Peer1 storage.Peer) {
 	var err error
 
 	if mess.Text == "" {
@@ -98,8 +92,7 @@ func ReceiveMessage(mess telegram_client.MessageTelegram, entities tg.Entities, 
 
 	//сообщение от автоответчика (старое)
 	name := chatgpt_connect.Settings.CHATGPT_NAME + "\n"
-	len_name := len(name)
-	if chatgpt_connect.Settings.CHATGPT_NAME != "" && len(mess.Text) >= len_name && mess.Text[0:len_name] == name {
+	if chatgpt_connect.Settings.CHATGPT_NAME != "" && strings.HasPrefix(mess.Text, name) == true {
 		return
 	}
 
@@ -113,28 +106,28 @@ func ReceiveMessage(mess telegram_client.MessageTelegram, entities tg.Entities, 
 		return
 	}
 
-	OtvetGPT := "test"
-	////Отправка в ChatGPT
-	//TextRequest := mess.Text
-	//Name := micro.StringFromInt64(mess.FromID)
-	//OtvetGPT, err = chatgpt_connect.SendMessage(TextRequest, Name)
-	//if err != nil {
-	//	log.Error("chatgpt_connect.SendMessage() error: ", err)
-	//	return
-	//}
-	//if OtvetGPT == "" {
-	//	log.Debug("error: response text gpt=''")
-	//	return
-	//}
+	OtvetGPT := ""
+	//OtvetGPT = "test"
+	//Отправка в ChatGPT
+	TextRequest := mess.Text
+	Name := micro.StringFromInt64(mess.FromID)
+	OtvetGPT, err = chatgpt_connect.SendMessage(TextRequest, Name)
+	if err != nil {
+		log.Error("chatgpt_connect.SendMessage() error: ", err)
+		return
+	}
+	if OtvetGPT == "" {
+		log.Debug("error: response text gpt=''")
+		return
+	}
 
 	//Отправка в Telegram
-	//PhoneTo := micro.StringFromInt64(mess.FromID)
-	SendMessage_WithChatGPTName(entities, u, OtvetGPT)
+	SendMessage_WithChatGPTName(Peer1, OtvetGPT)
 
 }
 
 // SendMessage_WithChatGPTName - отправка сообщения в Telegram с добавлением имени CHATGPT_NAME
-func SendMessage_WithChatGPTName(entities tg.Entities, u *tg.UpdateNewMessage, TextMess string) {
+func SendMessage_WithChatGPTName(Peer1 storage.Peer, TextMess string) {
 
 	TextMess = strings.Trim(TextMess, "\n")
 
@@ -148,32 +141,13 @@ func SendMessage_WithChatGPTName(entities tg.Entities, u *tg.UpdateNewMessage, T
 
 	api := telegram_client.Client.API()
 	sender := message.NewSender(api)
-	//rb := sender.Reply(entities, u)
-	rb := sender.Answer(entities, u)
-	UpdateClass1, err := rb.Text(ctx, TextMess)
+
+	InputPeerClass1 := Peer1.AsInputPeer()
+
+	RequestBuilder1 := sender.To(InputPeerClass1)
+	_, err := RequestBuilder1.Text(ctx, TextMess)
 	if err != nil {
-		log.Error("Answer() error: ", err)
-	} else {
-		log.Debug("Answer: ", UpdateClass1)
+		log.Error("Text() error: ", err)
 	}
 
-}
-
-// ContactsGetContacts - обновляет список контактов
-func ContactsGetContacts() {
-	ctxMain := contextmain.GetContext()
-	ctx, cancel_func := context.WithTimeout(ctxMain, time.Second*60)
-	defer cancel_func()
-	IContacts, err := telegram_client.Client.API().ContactsGetContacts(ctx, 0)
-	if err != nil {
-		log.Error("ContactsGetContacts() error: ", err)
-		return
-	}
-	ok := false
-	Contacts, ok = IContacts.(*tg.ContactsContacts)
-	if ok == false {
-		log.Error("IContacts() error: ", err)
-		return
-	}
-	log.Debug("Contacts len: ", len(Contacts.Contacts))
 }

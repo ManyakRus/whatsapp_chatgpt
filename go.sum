@@ -6,6 +6,12 @@ github.com/ManyakRus/logrus v0.0.0-20231019115155-9e6fede0d792 h1:bxwxD0H3kSUAH3
 github.com/ManyakRus/logrus v0.0.0-20231019115155-9e6fede0d792/go.mod h1:OUyxCVbPW/2lC1e6cM7Am941SJiC88BhNnb24x2R3a8=
 github.com/ManyakRus/starter v1.0.49 h1:uygFeY33ukVR86v2K7Jfi8ogXwtTumuh8q4Se3IwXSE=
 github.com/ManyakRus/starter v1.0.49/go.mod h1:fJC9PeOHag2XTP1833OZkp8gz6s46oMz0i+tzFt8iFg=
+github.com/ManyakRus/starter v1.0.50 h1:pgrkGPk8YUjW3SbpL9gwQ8j2+hf+1NnKfQ659pih5WE=
+github.com/ManyakRus/starter v1.0.50/go.mod h1:fJC9PeOHag2XTP1833OZkp8gz6s46oMz0i+tzFt8iFg=
+github.com/ManyakRus/starter v1.0.51 h1:eb6jrKAWDIcdAsFmEwgMqoJ9amTdAJAb491uh4WKyCo=
+github.com/ManyakRus/starter v1.0.51/go.mod h1:fJC9PeOHag2XTP1833OZkp8gz6s46oMz0i+tzFt8iFg=
+github.com/ManyakRus/starter v1.0.52 h1:T5kCJnt0EjjYbUUIGnxDOlN8y6Fvn7tgZqleRlB/nos=
+github.com/ManyakRus/starter v1.0.52/go.mod h1:fJC9PeOHag2XTP1833OZkp8gz6s46oMz0i+tzFt8iFg=
 github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=
 github.com/beorn7/perks v1.0.1/go.mod h1:G2ZrVWU2WbWT9wwq4/hrbKbnv/1ERSJQ0ibhJ6rlkpw=
 github.com/cenkalti/backoff/v4 v4.3.0 h1:MyRJ/UdXutAwSAT+s3wNd7MfTIcy71VQueUuFK343L8=

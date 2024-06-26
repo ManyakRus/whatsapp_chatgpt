@@ -22,8 +22,7 @@ func main() {
 
 // StartApp - выполнение всех операций для старта приложения
 func StartApp() {
-	//ProgramDir := programdir.ProgramDir()
-	config_main.LoadEnv()
+	config_main.LoadENV_or_SettingsTXT()
 
 	config.FillSettings()
 
@@ -36,9 +35,8 @@ func StartApp() {
 	}
 
 	if config.Settings.TELEGRAM_ENABLED == true {
-		telegram_client.CreateTelegramClient(telegram.OnNewMessage)
-		telegram_client.ConnectTelegram()
-		telegram.ContactsGetContacts()
+		telegram_client.Connect(telegram.OnNewMessage)
+		//telegram.GetContactsAll()
 	}
 
 	stopapp.GetWaitGroup_Main().Wait()
