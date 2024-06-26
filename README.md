@@ -43,9 +43,9 @@ https://my.telegram.org/apps
 
 3. Compile the code and run the file
 for linux:
->make mod
+>make build
 
->whatsapp_chatgpt
+>./bin/whatsapp_chatgpt
 4. After launching, you need to scan the QR code
 from the monitor screen in WhatsApp on your phone.
 Telegram will receive a message from the user "Telegram" with a code,
