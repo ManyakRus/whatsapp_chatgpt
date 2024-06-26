@@ -1,7 +1,7 @@
 SERVICENAME=whatsapp_chatgpt
 SERVICEURL=github.com/ManyakRus/$(SERVICENAME)
 
-FILEMAIN=./internal/v0/app/main.go
+FILEMAIN=./internal/main.go
 FILEAPP=./bin/whatsapp_chatgpt
 
 NEW_REPO=$(SERVICEURL)
