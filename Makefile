@@ -52,3 +52,5 @@ graph:
 conn:
 	clear
 	image_connections ./internal/v0/app docs/connections.graphml $(SERVICENAME)
+gocyclo:
+	golangci-lint run ./... --disable-all -E gocyclo -v
