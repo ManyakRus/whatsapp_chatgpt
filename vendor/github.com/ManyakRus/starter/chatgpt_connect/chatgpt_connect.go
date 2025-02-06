@@ -196,7 +196,8 @@ func SendMessage(Text string, user string) (string, error) {
 	Messages := []gogpt.ChatCompletionMessage{
 		{
 			Content: Text,
-			Role:    openai.ChatMessageRoleSystem,
+			Role:    openai.ChatMessageRoleUser,			
+//			Role:    openai.ChatMessageRoleSystem,
 		},
 	}
 
